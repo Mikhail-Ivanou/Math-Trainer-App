@@ -1,0 +1,16 @@
+---
+description: Unit, widget, and golden test conventions
+globs: test/**/*.dart
+alwaysApply: false
+---
+
+# Tests
+
+Mirror the unit under test: Cubit and repository tests in `test/unit/`, pages in `test/widget/`, stable UI in `test/golden/`.
+
+- Cubit tests use `bloc_test` and `SharedPreferences.setMockInitialValues`.
+- Repository tests use `mocktail`. Assert failures as `Failure`, not raw exceptions.
+- Widget tests pump `App` with explicit cubits and `AppRouter`. Assert copy from the English ARB.
+- Golden tests use `alchemist` and render light and dark. Set `debugShowCheckedModeBanner: false`.
+- Do not call the network or initialize Firebase. The offline graph is covered by `injection_test.dart`.
+- Refresh goldens with `flutter test --update-goldens`. macOS platform goldens differ by OS; CI goldens stay comparable.

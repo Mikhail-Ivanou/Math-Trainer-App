@@ -1,0 +1,20 @@
+---
+description: Clean Architecture boundaries, DI, theme, and localization
+alwaysApply: true
+---
+
+# Architecture
+
+Feature layout: `domain/`, `data/`, `state/`, `presentation/`. Feature widgets live in `presentation/widgets/`. Create `state/` and `widgets/` only when the first Cubit or widget appears.
+
+- `domain` does not import Flutter, Firebase, Dio, or `get_it`.
+- `data` implements `domain`. `state` and `presentation` depend on `domain`, not on `data`.
+- Cubit and Bloc classes live only in `state/`. Simple UI state uses Cubit. App theme and locale Cubits live in `core/settings/state/`.
+- Resolve dependencies in `main` via `configureDependencies`. Widgets do not call `getIt`.
+- User-facing strings come from ARB (`lib/l10n`). Regenerate with `flutter gen-l10n`.
+- Colors come from `Theme.of(context).extension<AppColors>()`. Shared widgets and theme settings live in `core/ui_kit/`.
+- Presentation and state import Material, `flutter_bloc`, `auto_route`, and `ui_kit` through `core/dependencies.dart`. Do not export Dio, Firebase, or `get_it` from that file.
+- Value types and sealed states extend `Equatable` and put fields in `props`. Do not use `freezed` or hand-written `==`.
+- Do not call `Firebase.initializeApp` unless `DefaultFirebaseOptions.isConfigured` is true.
+- Codegen: `dart run build_runner build`.
+- Write code comments and commit messages in English only. User-facing copy stays in the ARB files.
