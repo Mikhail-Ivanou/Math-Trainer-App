@@ -1,7 +1,6 @@
 import 'package:math_trainer_app/core/dependencies.dart';
 import 'package:math_trainer_app/features/auth/presentation/auth_failure_message.dart';
 import 'package:math_trainer_app/features/auth/state/sign_in_cubit.dart';
-import 'package:math_trainer_app/l10n/generated/app_localizations.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -24,8 +23,8 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColors>()!;
-    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
 
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {

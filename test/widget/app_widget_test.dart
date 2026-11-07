@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/app.dart';
+import 'package:math_trainer_app/core/di/injection.dart';
 import 'package:math_trainer_app/core/router/app_router.dart';
 import 'package:math_trainer_app/core/settings/state/locale_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/theme_cubit.dart';
@@ -11,7 +12,8 @@ import 'package:math_trainer_app/core/ui_kit/theme/app_colors.dart';
 import 'package:math_trainer_app/features/auth/domain/entities/auth_user.dart';
 import 'package:math_trainer_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
-import 'package:math_trainer_app/features/auth/state/sign_in_cubit.dart';
+import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
+import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _FakeAuthRepository implements AuthRepository {
@@ -55,12 +57,14 @@ void main() {
     final themeCubit = ThemeCubit(preferences);
     final localeCubit = LocaleCubit(preferences);
     final authSessionCubit = AuthSessionCubit(repository);
-    final signInCubit = SignInCubit(repository);
-    final router = AppRouter();
+    final router = AppRouter(authSessionCubit);
+    getIt.registerSingleton<AuthRepository>(repository);
+    getIt.registerSingleton<TopicsRepository>(_ReadyTopicsRepository());
+    addTearDown(getIt.reset);
+    addTearDown(router.dispose);
     addTearDown(themeCubit.close);
     addTearDown(localeCubit.close);
     addTearDown(authSessionCubit.close);
-    addTearDown(signInCubit.close);
     addTearDown(repository._users.close);
 
     await tester.pumpWidget(
@@ -68,7 +72,6 @@ void main() {
         themeCubit: themeCubit,
         localeCubit: localeCubit,
         authSessionCubit: authSessionCubit,
-        signInCubit: signInCubit,
         router: router,
       ),
     );
@@ -93,8 +96,42 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Math Trainer'), findsOneWidget);
+    expect(find.text('Topics'), findsWidgets);
+    expect(find.text('Fractions'), findsOneWidget);
+
+    await tester.tap(find.text('Profile'));
+    await tester.pumpAndSettle();
+
     expect(find.text('ada@example.com'), findsOneWidget);
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('Theme'), findsOneWidget);
     expect(find.text('Sign out'), findsOneWidget);
+
+    await tester.tap(find.text('Sign out'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Continue with Google'), findsOneWidget);
   });
+}
+
+class _ReadyTopicsRepository implements TopicsRepository {
+  @override
+  Stream<List<Topic>> watchTopics() {
+    return Stream.value(const [
+      Topic(
+        id: 'rule-1',
+        title: 'Fractions',
+        rule: 'A fraction names equal parts.',
+        grade: 5,
+        subject: 'math',
+        bookId: 'book-1',
+        bookTitle: 'Algebra',
+        chapter: 2,
+        chapterTitle: 'Numbers',
+        sectionId: 'section-4',
+        sectionNumber: 4,
+        sectionTitle: 'Common fractions',
+      ),
+    ]);
+  }
 }

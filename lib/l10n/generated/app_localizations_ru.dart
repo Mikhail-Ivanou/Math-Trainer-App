@@ -64,4 +64,54 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get signOut => 'Выйти';
+
+  @override
+  String get topicsTab => 'Темы';
+
+  @override
+  String get profileTab => 'Профиль';
+
+  @override
+  String get topicsEmpty => 'Тем пока нет.';
+
+  @override
+  String get accountSection => 'Аккаунт';
+
+  @override
+  String get settingsSection => 'Настройки';
+
+  @override
+  String get languageSetting => 'Язык';
+
+  @override
+  String get themeSetting => 'Тема';
+
+  @override
+  String get themeSystem => 'Системная';
+
+  @override
+  String get themeLight => 'Светлая';
+
+  @override
+  String get themeDark => 'Тёмная';
+
+  @override
+  String get localeSystem => 'Системный';
+
+  @override
+  String get localeEnglish => 'English';
+
+  @override
+  String get localeRussian => 'Русский';
+
+  @override
+  String get subjectMath => 'Математика';
+
+  @override
+  String topicGrade(int grade) {
+    return '$grade класс';
+  }
+
+  @override
+  String get signedInWithoutEmail => 'Вы вошли';
 }

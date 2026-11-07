@@ -10,7 +10,7 @@ Mirror the unit under test: Cubit and repository tests in `test/unit/`, pages in
 
 - Cubit tests use `bloc_test` and `SharedPreferences.setMockInitialValues`.
 - Repository tests use `mocktail`. Assert failures as `Failure`, not raw exceptions.
-- Widget tests pump `App` with explicit cubits and `AppRouter`. Assert copy from the English ARB.
+- Widget tests pump `App` with explicit cubits and `AppRouter`. Register the repositories a screen reads from `getIt`. Assert copy from the English ARB.
 - Golden tests use `alchemist` and render light and dark. Set `debugShowCheckedModeBanner: false`.
-- Do not call the network or initialize Firebase. The offline graph is covered by `injection_test.dart`.
+- Do not call the network or initialize Firebase. `injection_test.dart` checks registrations that do not construct Firebase.
 - Refresh goldens with `flutter test --update-goldens`. macOS platform goldens differ by OS; CI goldens stay comparable.

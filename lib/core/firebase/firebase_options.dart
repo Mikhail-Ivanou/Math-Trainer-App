@@ -5,16 +5,6 @@ import 'package:math_trainer_app/core/firebase/firebase_keys.dart';
 
 /// Options for the math-traineer Firebase project.
 abstract final class DefaultFirebaseOptions {
-  static bool get isConfigured {
-    if (kIsWeb) {
-      return true;
-    }
-    return switch (defaultTargetPlatform) {
-      TargetPlatform.android || TargetPlatform.iOS => true,
-      _ => false,
-    };
-  }
-
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;

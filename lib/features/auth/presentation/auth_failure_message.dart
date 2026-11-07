@@ -10,6 +10,6 @@ String authFailureMessage(AppLocalizations l10n, Failure failure) {
     WeakPasswordFailure() => l10n.weakPassword,
     TooManyRequestsFailure() => l10n.tooManyRequests,
     NetworkFailure() => l10n.networkError,
-    UnconfiguredFailure() || UnexpectedFailure() => l10n.unexpectedError,
+    UnexpectedFailure() => l10n.unexpectedError,
   };
 }

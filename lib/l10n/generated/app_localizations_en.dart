@@ -64,4 +64,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signOut => 'Sign out';
+
+  @override
+  String get topicsTab => 'Topics';
+
+  @override
+  String get profileTab => 'Profile';
+
+  @override
+  String get topicsEmpty => 'No topics yet.';
+
+  @override
+  String get accountSection => 'Account';
+
+  @override
+  String get settingsSection => 'Settings';
+
+  @override
+  String get languageSetting => 'Language';
+
+  @override
+  String get themeSetting => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get localeSystem => 'System';
+
+  @override
+  String get localeEnglish => 'English';
+
+  @override
+  String get localeRussian => 'Русский';
+
+  @override
+  String get subjectMath => 'Math';
+
+  @override
+  String topicGrade(int grade) {
+    return 'Grade $grade';
+  }
+
+  @override
+  String get signedInWithoutEmail => 'Signed in';
 }

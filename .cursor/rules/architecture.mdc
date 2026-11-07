@@ -9,12 +9,17 @@ Feature layout: `domain/`, `data/`, `state/`, `presentation/`. Feature widgets l
 
 - `domain` does not import Flutter, Firebase, Dio, or `get_it`.
 - `data` implements `domain`. `state` and `presentation` depend on `domain`, not on `data`.
-- Cubit and Bloc classes live only in `state/`. Simple UI state uses Cubit. App theme and locale Cubits live in `core/settings/state/`.
-- Resolve dependencies in `main` via `configureDependencies`. Widgets do not call `getIt`.
+- Cubit and Bloc classes live only in `state/`. Simple UI state uses Cubit. The widget that owns that state creates the Cubit.
+- Read Cubit state with `BlocBuilder`. Do not use `context.watch`.
+- Keep `build` methods small. Extract a nested widget when a builder covers more than one layout region.
+- Resolve the graph in `main` via `configureDependencies`. `App` provides only app-wide cubits: theme, locale, and auth session.
+- The router only maps a location to a screen. It does not take or pass feature dependencies.
+- A screen reads each dependency it needs from `getIt` in `core/di/injection.dart`. Nested widgets do not call `getIt`.
 - User-facing strings come from ARB (`lib/l10n`). Regenerate with `flutter gen-l10n`.
-- Colors come from `Theme.of(context).extension<AppColors>()`. Shared widgets and theme settings live in `core/ui_kit/`.
-- Presentation and state import Material, `flutter_bloc`, `auto_route`, and `ui_kit` through `core/dependencies.dart`. Do not export Dio, Firebase, or `get_it` from that file.
+- Feature widgets read colors with `context.colors` and strings with `context.l10n`. Do not call `Theme.of(context).extension<AppColors>()` or `AppLocalizations.of(context)` in features.
+- Shared widgets and theme settings live in `core/ui_kit/`.
+- Presentation and state import Material, `flutter_bloc`, `go_router`, and `ui_kit` through `core/dependencies.dart`. Do not export Dio, Firebase, or `get_it` from that file.
 - Value types and sealed states extend `Equatable` and put fields in `props`. Do not use `freezed` or hand-written `==`.
-- Do not call `Firebase.initializeApp` unless `DefaultFirebaseOptions.isConfigured` is true.
+- Call `Firebase.initializeApp` with `DefaultFirebaseOptions.currentPlatform` before `configureDependencies`.
 - Codegen: `dart run build_runner build`.
 - Write code comments and commit messages in English only. User-facing copy stays in the ARB files.

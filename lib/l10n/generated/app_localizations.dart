@@ -211,6 +211,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign out'**
   String get signOut;
+
+  /// No description provided for @topicsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics'**
+  String get topicsTab;
+
+  /// No description provided for @profileTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTab;
+
+  /// No description provided for @topicsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No topics yet.'**
+  String get topicsEmpty;
+
+  /// No description provided for @accountSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountSection;
+
+  /// No description provided for @settingsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsSection;
+
+  /// No description provided for @languageSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageSetting;
+
+  /// No description provided for @themeSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeSetting;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @localeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get localeSystem;
+
+  /// No description provided for @localeEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get localeEnglish;
+
+  /// No description provided for @localeRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get localeRussian;
+
+  /// No description provided for @subjectMath.
+  ///
+  /// In en, this message translates to:
+  /// **'Math'**
+  String get subjectMath;
+
+  /// No description provided for @topicGrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade {grade}'**
+  String topicGrade(int grade);
+
+  /// No description provided for @signedInWithoutEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in'**
+  String get signedInWithoutEmail;
 }
 
 class _AppLocalizationsDelegate

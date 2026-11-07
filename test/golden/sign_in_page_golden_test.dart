@@ -1,14 +1,20 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:math_trainer_app/core/di/injection.dart';
 import 'package:math_trainer_app/core/ui_kit/theme/app_theme.dart';
 import 'package:math_trainer_app/features/auth/domain/entities/auth_user.dart';
 import 'package:math_trainer_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:math_trainer_app/features/auth/presentation/sign_in_page.dart';
-import 'package:math_trainer_app/features/auth/state/sign_in_cubit.dart';
 import 'package:math_trainer_app/l10n/generated/app_localizations.dart';
 
 void main() {
+  setUpAll(() {
+    getIt.registerSingleton<AuthRepository>(_IdleAuthRepository());
+  });
+
+  tearDownAll(getIt.reset);
+
   goldenTest(
     'sign-in page in light and dark themes',
     fileName: 'sign_in_page',
@@ -64,16 +70,13 @@ class _SignInHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SignInCubit(_IdleAuthRepository()),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: const SignInPage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: theme,
+      locale: const Locale('en'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: const SignInPage(),
     );
   }
 }

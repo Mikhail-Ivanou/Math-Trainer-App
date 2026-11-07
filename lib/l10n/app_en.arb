@@ -18,5 +18,28 @@
   "tooManyRequests": "Too many attempts. Try again later.",
   "networkError": "Check your connection and try again.",
   "unexpectedError": "Something went wrong. Try again.",
-  "signOut": "Sign out"
+  "signOut": "Sign out",
+  "topicsTab": "Topics",
+  "profileTab": "Profile",
+  "topicsEmpty": "No topics yet.",
+  "accountSection": "Account",
+  "settingsSection": "Settings",
+  "languageSetting": "Language",
+  "themeSetting": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "localeSystem": "System",
+  "localeEnglish": "English",
+  "localeRussian": "Русский",
+  "subjectMath": "Math",
+  "topicGrade": "Grade {grade}",
+  "@topicGrade": {
+    "placeholders": {
+      "grade": {
+        "type": "int"
+      }
+    }
+  },
+  "signedInWithoutEmail": "Signed in"
 }

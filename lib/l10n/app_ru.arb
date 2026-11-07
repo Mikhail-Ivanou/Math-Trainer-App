@@ -18,5 +18,21 @@
   "tooManyRequests": "Слишком много попыток. Попробуйте позже.",
   "networkError": "Проверьте соединение и попробуйте снова.",
   "unexpectedError": "Что-то пошло не так. Попробуйте снова.",
-  "signOut": "Выйти"
+  "signOut": "Выйти",
+  "topicsTab": "Темы",
+  "profileTab": "Профиль",
+  "topicsEmpty": "Тем пока нет.",
+  "accountSection": "Аккаунт",
+  "settingsSection": "Настройки",
+  "languageSetting": "Язык",
+  "themeSetting": "Тема",
+  "themeSystem": "Системная",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "localeSystem": "Системный",
+  "localeEnglish": "English",
+  "localeRussian": "Русский",
+  "subjectMath": "Математика",
+  "topicGrade": "{grade} класс",
+  "signedInWithoutEmail": "Вы вошли"
 }

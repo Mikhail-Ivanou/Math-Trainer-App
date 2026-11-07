@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:injectable/injectable.dart';
 import 'package:math_trainer_app/core/dependencies.dart';
 import 'package:math_trainer_app/core/error/failure.dart';
 import 'package:math_trainer_app/features/auth/domain/repositories/auth_repository.dart';
@@ -34,7 +33,6 @@ final class SignInState extends Equatable {
   List<Object?> get props => [mode, submitting, failure];
 }
 
-@injectable
 class SignInCubit extends Cubit<SignInState> {
   SignInCubit(this._repository) : super(const SignInState());
 

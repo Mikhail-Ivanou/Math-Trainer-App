@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:math_trainer_app/core/di/app_env.dart';
 import 'package:math_trainer_app/core/network/rest_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,10 +20,8 @@ abstract class RegisterModule {
   RestClient restClient(Dio dio) => RestClient(dio);
 
   @lazySingleton
-  @Environment(AppEnv.firebase)
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 
   @lazySingleton
-  @Environment(AppEnv.firebase)
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 }
