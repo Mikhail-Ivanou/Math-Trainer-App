@@ -10,4 +10,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appTitle => 'Math Trainer';
+
+  @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String get registerTitle => 'Create account';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get signInAction => 'Sign in';
+
+  @override
+  String get registerAction => 'Create account';
+
+  @override
+  String get switchToRegister => 'Need an account? Create one';
+
+  @override
+  String get switchToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get missingCredentials => 'Enter your email and password.';
+
+  @override
+  String get invalidEmail => 'Enter a valid email address.';
+
+  @override
+  String get invalidCredentials => 'Email or password is incorrect.';
+
+  @override
+  String get emailAlreadyInUse => 'An account with this email already exists.';
+
+  @override
+  String get weakPassword => 'Use at least 6 characters.';
+
+  @override
+  String get tooManyRequests => 'Too many attempts. Try again later.';
+
+  @override
+  String get networkError => 'Check your connection and try again.';
+
+  @override
+  String get unexpectedError => 'Something went wrong. Try again.';
+
+  @override
+  String get signOut => 'Sign out';
 }

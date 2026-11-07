@@ -1,4 +1,22 @@
 {
   "@@locale": "ru",
-  "appTitle": "Тренажёр математики"
+  "appTitle": "Тренажёр математики",
+  "signInTitle": "Вход",
+  "registerTitle": "Создать аккаунт",
+  "emailLabel": "Эл. почта",
+  "passwordLabel": "Пароль",
+  "signInAction": "Войти",
+  "registerAction": "Создать аккаунт",
+  "switchToRegister": "Нет аккаунта? Создать",
+  "switchToSignIn": "Уже есть аккаунт? Войти",
+  "continueWithGoogle": "Продолжить с Google",
+  "missingCredentials": "Введите почту и пароль.",
+  "invalidEmail": "Введите корректный адрес почты.",
+  "invalidCredentials": "Неверная почта или пароль.",
+  "emailAlreadyInUse": "Аккаунт с этой почтой уже существует.",
+  "weakPassword": "Используйте не меньше 6 символов.",
+  "tooManyRequests": "Слишком много попыток. Попробуйте позже.",
+  "networkError": "Проверьте соединение и попробуйте снова.",
+  "unexpectedError": "Что-то пошло не так. Попробуйте снова.",
+  "signOut": "Выйти"
 }

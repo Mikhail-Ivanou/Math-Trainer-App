@@ -21,16 +21,57 @@ class AuthRepositoryImpl implements AuthRepository {
         handleData: (data, sink) => sink.add(data),
         handleError:
             (Object error, StackTrace stackTrace, EventSink<AuthUser?> sink) {
-              if (error is Failure) {
-                sink.addError(error, stackTrace);
-                return;
-              }
-              final failure = _firestoreGateway.isAvailable
-                  ? const UnexpectedFailure()
-                  : const UnconfiguredFailure();
-              sink.addError(failure, stackTrace);
+              sink.addError(_mapError(error), stackTrace);
             },
       ),
     );
+  }
+
+  @override
+  Future<void> signInWithEmail({
+    required String email,
+    required String password,
+  }) {
+    return _guard(
+      () => _dataSource.signInWithEmail(email: email, password: password),
+    );
+  }
+
+  @override
+  Future<void> registerWithEmail({
+    required String email,
+    required String password,
+  }) {
+    return _guard(
+      () => _dataSource.registerWithEmail(email: email, password: password),
+    );
+  }
+
+  @override
+  Future<void> signInWithGoogle() {
+    return _guard(_dataSource.signInWithGoogle);
+  }
+
+  @override
+  Future<void> signOut() {
+    return _guard(_dataSource.signOut);
+  }
+
+  Future<void> _guard(Future<void> Function() action) async {
+    try {
+      await action();
+    } catch (error) {
+      throw _mapError(error);
+    }
+  }
+
+  Failure _mapError(Object error) {
+    if (error is Failure) {
+      return error;
+    }
+    if (!_firestoreGateway.isAvailable) {
+      return const UnconfiguredFailure();
+    }
+    return const UnexpectedFailure();
   }
 }

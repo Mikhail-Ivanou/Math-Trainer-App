@@ -40,12 +40,18 @@ void main() {
     expect(repository.watchAuthState(), emitsError(isA<UnconfiguredFailure>()));
   });
 
-  test('maps a raw error to UnexpectedFailure when Firebase is available', () {
+  test('maps a sign-in failure thrown by the data source', () {
     when(
-      () => dataSource.watchAuthState(),
-    ).thenAnswer((_) => Stream.error(Exception('auth backend')));
+      () => dataSource.signInWithEmail(
+        email: 'ada@example.com',
+        password: 'secret',
+      ),
+    ).thenThrow(Exception('auth backend'));
     when(() => firestoreGateway.isAvailable).thenReturn(true);
 
-    expect(repository.watchAuthState(), emitsError(isA<UnexpectedFailure>()));
+    expect(
+      repository.signInWithEmail(email: 'ada@example.com', password: 'secret'),
+      throwsA(isA<UnexpectedFailure>()),
+    );
   });
 }

@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Math Trainer",
+        "supportEmail": "agidel2012@gmail.com"
+      }
+    }
+  }
+}

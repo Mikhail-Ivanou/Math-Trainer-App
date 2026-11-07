@@ -1,4 +1,22 @@
 {
   "@@locale": "en",
-  "appTitle": "Math Trainer"
+  "appTitle": "Math Trainer",
+  "signInTitle": "Sign in",
+  "registerTitle": "Create account",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "signInAction": "Sign in",
+  "registerAction": "Create account",
+  "switchToRegister": "Need an account? Create one",
+  "switchToSignIn": "Already have an account? Sign in",
+  "continueWithGoogle": "Continue with Google",
+  "missingCredentials": "Enter your email and password.",
+  "invalidEmail": "Enter a valid email address.",
+  "invalidCredentials": "Email or password is incorrect.",
+  "emailAlreadyInUse": "An account with this email already exists.",
+  "weakPassword": "Use at least 6 characters.",
+  "tooManyRequests": "Too many attempts. Try again later.",
+  "networkError": "Check your connection and try again.",
+  "unexpectedError": "Something went wrong. Try again.",
+  "signOut": "Sign out"
 }

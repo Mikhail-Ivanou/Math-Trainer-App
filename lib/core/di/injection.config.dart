@@ -37,6 +37,10 @@ import 'package:math_trainer_app/features/auth/data/repositories/auth_repository
     as _i173;
 import 'package:math_trainer_app/features/auth/domain/repositories/auth_repository.dart'
     as _i856;
+import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart'
+    as _i375;
+import 'package:math_trainer_app/features/auth/state/sign_in_cubit.dart'
+    as _i1062;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 const String _offline = 'offline';
@@ -94,6 +98,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i546.AuthRemoteDataSource>(),
         gh<_i39.FirestoreGateway>(),
       ),
+    );
+    gh.lazySingleton<_i375.AuthSessionCubit>(
+      () => _i375.AuthSessionCubit(gh<_i856.AuthRepository>()),
+    );
+    gh.factory<_i1062.SignInCubit>(
+      () => _i1062.SignInCubit(gh<_i856.AuthRepository>()),
     );
     return this;
   }
