@@ -60,13 +60,15 @@ final class AppColors extends ThemeExtension<AppColors> {
       return this;
     }
 
+    Color blend(Color from, Color to) => Color.lerp(from, to, t) ?? from;
+
     return AppColors(
-      background: Color.lerp(background, other.background, t)!,
-      surface: Color.lerp(surface, other.surface, t)!,
-      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
-      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
-      accent: Color.lerp(accent, other.accent, t)!,
-      danger: Color.lerp(danger, other.danger, t)!,
+      background: blend(background, other.background),
+      surface: blend(surface, other.surface),
+      textPrimary: blend(textPrimary, other.textPrimary),
+      textSecondary: blend(textSecondary, other.textSecondary),
+      accent: blend(accent, other.accent),
+      danger: blend(danger, other.danger),
     );
   }
 }

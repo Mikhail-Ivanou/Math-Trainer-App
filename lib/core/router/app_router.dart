@@ -6,11 +6,15 @@ import 'package:math_trainer_app/features/auth/presentation/auth_gate_page.dart'
 import 'package:math_trainer_app/features/auth/presentation/sign_in_page.dart';
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/home/presentation/home_page.dart';
+import 'package:math_trainer_app/features/topics/presentation/topic_page.dart';
 
 abstract final class AppRoutes {
   static const auth = '/';
   static const signIn = '/sign-in';
   static const home = '/home';
+  static const topic = '/topics/:topicId';
+
+  static String topicPath(String topicId) => '/topics/$topicId';
 }
 
 @lazySingleton
@@ -25,6 +29,12 @@ class AppRouter {
         GoRoute(path: AppRoutes.auth, builder: (_, _) => const AuthGatePage()),
         GoRoute(path: AppRoutes.signIn, builder: (_, _) => const SignInPage()),
         GoRoute(path: AppRoutes.home, builder: (_, _) => const HomePage()),
+        GoRoute(
+          path: AppRoutes.topic,
+          builder: (_, state) {
+            return TopicPage(topicId: state.pathParameters['topicId']);
+          },
+        ),
       ],
     );
   }
@@ -41,7 +51,9 @@ class AppRouter {
       AuthSessionSignedOut() =>
         location == AppRoutes.signIn ? null : AppRoutes.signIn,
       AuthSessionSignedIn() =>
-        location == AppRoutes.home ? null : AppRoutes.home,
+        location == AppRoutes.home || location.startsWith('/topics/')
+            ? null
+            : AppRoutes.home,
     };
   }
 

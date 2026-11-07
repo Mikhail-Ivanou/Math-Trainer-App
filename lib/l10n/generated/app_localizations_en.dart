@@ -114,4 +114,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signedInWithoutEmail => 'Signed in';
+
+  @override
+  String solvedProgress(int solved, int total) {
+    return 'Solved $solved of $total';
+  }
+
+  @override
+  String get hideSolved => 'Hide solved';
+
+  @override
+  String get showSolved => 'Show solved';
+
+  @override
+  String get showAnswer => 'Show answer';
+
+  @override
+  String get hideAnswer => 'Hide answer';
+
+  @override
+  String get wholeParagraph => 'Whole paragraph';
+
+  @override
+  String topicPart(int part) {
+    return 'Part $part';
+  }
+
+  @override
+  String get taskExpression => 'calculate';
+
+  @override
+  String get taskEquation => 'equation';
+
+  @override
+  String get taskWord => 'problem';
+
+  @override
+  String get taskSimplify => 'simplify';
+
+  @override
+  String get difficultyEasy => 'easy';
+
+  @override
+  String get difficultyMedium => 'medium';
+
+  @override
+  String get difficultyHard => 'hard';
+
+  @override
+  String get difficultyExpert => 'expert';
+
+  @override
+  String get tasksEmpty => 'No problems yet.';
+
+  @override
+  String get topicMissing => 'This topic is unavailable.';
+
+  @override
+  String get printFailed => 'Couldn\'t create the PDF.';
+
+  @override
+  String get showTopic => 'Topic';
+
+  @override
+  String get printTasks => 'PDF';
 }

@@ -307,6 +307,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signed in'**
   String get signedInWithoutEmail;
+
+  /// No description provided for @solvedProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Solved {solved} of {total}'**
+  String solvedProgress(int solved, int total);
+
+  /// No description provided for @hideSolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide solved'**
+  String get hideSolved;
+
+  /// No description provided for @showSolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Show solved'**
+  String get showSolved;
+
+  /// No description provided for @showAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show answer'**
+  String get showAnswer;
+
+  /// No description provided for @hideAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide answer'**
+  String get hideAnswer;
+
+  /// No description provided for @wholeParagraph.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole paragraph'**
+  String get wholeParagraph;
+
+  /// No description provided for @topicPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {part}'**
+  String topicPart(int part);
+
+  /// No description provided for @taskExpression.
+  ///
+  /// In en, this message translates to:
+  /// **'calculate'**
+  String get taskExpression;
+
+  /// No description provided for @taskEquation.
+  ///
+  /// In en, this message translates to:
+  /// **'equation'**
+  String get taskEquation;
+
+  /// No description provided for @taskWord.
+  ///
+  /// In en, this message translates to:
+  /// **'problem'**
+  String get taskWord;
+
+  /// No description provided for @taskSimplify.
+  ///
+  /// In en, this message translates to:
+  /// **'simplify'**
+  String get taskSimplify;
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'easy'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'medium'**
+  String get difficultyMedium;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'hard'**
+  String get difficultyHard;
+
+  /// No description provided for @difficultyExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'expert'**
+  String get difficultyExpert;
+
+  /// No description provided for @tasksEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No problems yet.'**
+  String get tasksEmpty;
+
+  /// No description provided for @topicMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'This topic is unavailable.'**
+  String get topicMissing;
+
+  /// No description provided for @printFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t create the PDF.'**
+  String get printFailed;
+
+  /// No description provided for @showTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic'**
+  String get showTopic;
+
+  /// No description provided for @printTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get printTasks;
 }
 
 class _AppLocalizationsDelegate

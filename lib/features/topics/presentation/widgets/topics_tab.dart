@@ -3,6 +3,7 @@ import 'package:math_trainer_app/core/di/injection.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/topic_groups.dart';
+import 'package:math_trainer_app/core/router/app_router.dart';
 import 'package:math_trainer_app/features/topics/presentation/topic_subject_label.dart';
 import 'package:math_trainer_app/features/topics/state/topics_cubit.dart';
 
@@ -130,33 +131,36 @@ class _TopicRow extends StatelessWidget {
     final colors = context.colors;
     final l10n = context.l10n;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  topic.title,
-                  style: TextStyle(
-                    color: colors.textPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: () => context.push(AppRoutes.topicPath(topic.id)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    topic.title,
+                    style: TextStyle(
+                      color: colors.textPrimary,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  topicListSubtitle(l10n, topic),
-                  style: TextStyle(color: colors.textSecondary, fontSize: 15),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    topicListSubtitle(l10n, topic),
+                    style: TextStyle(color: colors.textSecondary, fontSize: 15),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Icon(Icons.chevron_right, color: colors.textSecondary),
-        ],
+            Icon(Icons.chevron_right, color: colors.textSecondary),
+          ],
+        ),
       ),
     );
   }

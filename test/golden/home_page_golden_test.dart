@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/core/di/injection.dart';
+import 'package:math_trainer_app/core/settings/hide_solved_repository.dart';
 import 'package:math_trainer_app/core/settings/state/locale_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/theme_cubit.dart';
 import 'package:math_trainer_app/core/ui_kit/theme/app_theme.dart';
@@ -22,6 +23,7 @@ void main() {
     SharedPreferences.setMockInitialValues({'locale_code': 'en'});
     preferences = await SharedPreferences.getInstance();
     getIt.registerSingleton<TopicsRepository>(_FixedTopicsRepository());
+    getIt.registerSingleton<HideSolvedRepository>(_HiddenSolvedOff());
   });
 
   tearDownAll(getIt.reset);
@@ -139,6 +141,17 @@ class _SignedInRepository implements AuthRepository {
 
   @override
   Future<void> signOut() async {}
+}
+
+class _HiddenSolvedOff implements HideSolvedRepository {
+  @override
+  bool get hideSolved => false;
+
+  @override
+  Stream<bool> watchHideSolved() => Stream.value(false);
+
+  @override
+  Future<void> setHideSolved(bool value) async {}
 }
 
 class _FixedTopicsRepository implements TopicsRepository {

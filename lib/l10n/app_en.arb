@@ -41,5 +41,36 @@
       }
     }
   },
-  "signedInWithoutEmail": "Signed in"
+  "signedInWithoutEmail": "Signed in",
+  "solvedProgress": "Solved {solved} of {total}",
+  "@solvedProgress": {
+    "placeholders": {
+      "solved": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "hideSolved": "Hide solved",
+  "showSolved": "Show solved",
+  "showAnswer": "Show answer",
+  "hideAnswer": "Hide answer",
+  "wholeParagraph": "Whole paragraph",
+  "topicPart": "Part {part}",
+  "@topicPart": {
+    "placeholders": {
+      "part": {"type": "int"}
+    }
+  },
+  "taskExpression": "calculate",
+  "taskEquation": "equation",
+  "taskWord": "problem",
+  "taskSimplify": "simplify",
+  "difficultyEasy": "easy",
+  "difficultyMedium": "medium",
+  "difficultyHard": "hard",
+  "difficultyExpert": "expert",
+  "tasksEmpty": "No problems yet.",
+  "topicMissing": "This topic is unavailable.",
+  "printFailed": "Couldn't create the PDF.",
+  "showTopic": "Topic",
+  "printTasks": "PDF"
 }

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/app.dart';
 import 'package:math_trainer_app/core/di/injection.dart';
 import 'package:math_trainer_app/core/router/app_router.dart';
+import 'package:math_trainer_app/core/settings/hide_solved_repository.dart';
 import 'package:math_trainer_app/core/settings/state/locale_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/theme_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/theme_state.dart';
@@ -60,6 +61,7 @@ void main() {
     final router = AppRouter(authSessionCubit);
     getIt.registerSingleton<AuthRepository>(repository);
     getIt.registerSingleton<TopicsRepository>(_ReadyTopicsRepository());
+    getIt.registerSingleton<HideSolvedRepository>(_HiddenSolvedOff());
     addTearDown(getIt.reset);
     addTearDown(router.dispose);
     addTearDown(themeCubit.close);
@@ -86,10 +88,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final signInContext = tester.element(find.text('Continue with Google'));
-    expect(
-      Theme.of(signInContext).extension<AppColors>(),
-      AppColors.dark,
-    );
+    expect(Theme.of(signInContext).extension<AppColors>(), AppColors.dark);
 
     await tester.enterText(find.byType(TextField).at(0), 'ada@example.com');
     await tester.enterText(find.byType(TextField).at(1), 'secret1');
@@ -105,6 +104,7 @@ void main() {
     expect(find.text('ada@example.com'), findsOneWidget);
     expect(find.text('Language'), findsOneWidget);
     expect(find.text('Theme'), findsOneWidget);
+    expect(find.text('Hide solved'), findsOneWidget);
     expect(find.text('Sign out'), findsOneWidget);
 
     await tester.tap(find.text('Sign out'));
@@ -112,6 +112,17 @@ void main() {
 
     expect(find.text('Continue with Google'), findsOneWidget);
   });
+}
+
+class _HiddenSolvedOff implements HideSolvedRepository {
+  @override
+  bool get hideSolved => false;
+
+  @override
+  Stream<bool> watchHideSolved() => Stream.value(false);
+
+  @override
+  Future<void> setHideSolved(bool value) async {}
 }
 
 class _ReadyTopicsRepository implements TopicsRepository {

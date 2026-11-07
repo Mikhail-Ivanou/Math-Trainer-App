@@ -20,6 +20,7 @@ Feature layout: `domain/`, `data/`, `state/`, `presentation/`. Feature widgets l
 - Shared widgets and theme settings live in `core/ui_kit/`.
 - Presentation and state import Material, `flutter_bloc`, `go_router`, and `ui_kit` through `core/dependencies.dart`. Do not export Dio, Firebase, or `get_it` from that file.
 - Value types and sealed states extend `Equatable` and put fields in `props`. Do not use `freezed` or hand-written `==`.
+- Do not use the null-assertion operator `!` on a nullable value. Handle the missing value with `??`, a null check, or a pattern. Boolean `!` and `is!` are ordinary operators. Leave the `!` that `flutter gen-l10n` writes in `lib/l10n/generated/`.
 - Call `Firebase.initializeApp` with `DefaultFirebaseOptions.currentPlatform` before `configureDependencies`.
 - Codegen: `dart run build_runner build`.
 - Write code comments and commit messages in English only. User-facing copy stays in the ARB files.

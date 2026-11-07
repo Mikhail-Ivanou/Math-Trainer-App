@@ -29,6 +29,11 @@ void main() {
       repository.watchTopics(),
       emits([earlierParagraph, laterParagraph, nextGrade]),
     );
+    expect(
+      repository.watchTopics(),
+      emits([earlierParagraph, laterParagraph, nextGrade]),
+    );
+    verify(() => dataSource.watchTopics()).called(1);
   });
 
   test('maps a raw error to UnexpectedFailure', () {

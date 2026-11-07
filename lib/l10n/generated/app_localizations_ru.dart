@@ -114,4 +114,68 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get signedInWithoutEmail => 'Вы вошли';
+
+  @override
+  String solvedProgress(int solved, int total) {
+    return 'Решено $solved из $total';
+  }
+
+  @override
+  String get hideSolved => 'Скрыть решённые';
+
+  @override
+  String get showSolved => 'Показать решённые';
+
+  @override
+  String get showAnswer => 'Показать ответ';
+
+  @override
+  String get hideAnswer => 'Скрыть ответ';
+
+  @override
+  String get wholeParagraph => 'Весь параграф';
+
+  @override
+  String topicPart(int part) {
+    return 'Часть $part';
+  }
+
+  @override
+  String get taskExpression => 'вычисли';
+
+  @override
+  String get taskEquation => 'уравнение';
+
+  @override
+  String get taskWord => 'задача';
+
+  @override
+  String get taskSimplify => 'упрости';
+
+  @override
+  String get difficultyEasy => 'легко';
+
+  @override
+  String get difficultyMedium => 'среднее';
+
+  @override
+  String get difficultyHard => 'сложно';
+
+  @override
+  String get difficultyExpert => 'эксперт';
+
+  @override
+  String get tasksEmpty => 'Задач пока нет.';
+
+  @override
+  String get topicMissing => 'Тема недоступна.';
+
+  @override
+  String get printFailed => 'Не удалось создать PDF.';
+
+  @override
+  String get showTopic => 'Тема';
+
+  @override
+  String get printTasks => 'PDF';
 }

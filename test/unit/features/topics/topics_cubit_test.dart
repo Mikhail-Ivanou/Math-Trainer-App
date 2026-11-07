@@ -31,9 +31,8 @@ void main() {
 
   blocTest<TopicsCubit, TopicsState>(
     'emits a failure when the stream errors',
-    build: () => TopicsCubit(
-      _TopicsRepository(Stream.error(const UnexpectedFailure())),
-    ),
+    build: () =>
+        TopicsCubit(_TopicsRepository(Stream.error(const UnexpectedFailure()))),
     wait: Duration.zero,
     expect: () => [const TopicsFailure(UnexpectedFailure())],
   );

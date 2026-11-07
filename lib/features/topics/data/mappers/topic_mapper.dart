@@ -16,6 +16,7 @@ abstract final class TopicMapper {
       sectionId: data['sectionId'] as String? ?? '',
       sectionNumber: (data['sectionNumber'] as num?)?.toInt() ?? 0,
       sectionTitle: data['sectionTitle'] as String? ?? '',
+      paragraph: data['paragraph'] as String? ?? '',
       createdAt: _createdAt(data['createdAt']),
     );
   }

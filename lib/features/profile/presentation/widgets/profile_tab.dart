@@ -1,12 +1,27 @@
 import 'package:math_trainer_app/core/dependencies.dart';
+import 'package:math_trainer_app/core/di/injection.dart';
+import 'package:math_trainer_app/core/settings/hide_solved_repository.dart';
 import 'package:math_trainer_app/core/settings/state/locale_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/locale_state.dart';
 import 'package:math_trainer_app/core/settings/state/theme_cubit.dart';
 import 'package:math_trainer_app/core/settings/state/theme_state.dart';
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
+import 'package:math_trainer_app/features/profile/state/hide_solved_cubit.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => HideSolvedCubit(getIt<HideSolvedRepository>()),
+      child: const _ProfileView(),
+    );
+  }
+}
+
+class _ProfileView extends StatelessWidget {
+  const _ProfileView();
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +122,8 @@ class _SettingsSection extends StatelessWidget {
               _LanguageSetting(),
               SizedBox(height: 20),
               _ThemeSetting(),
+              SizedBox(height: 20),
+              _HideSolvedSetting(),
             ],
           ),
         ),
@@ -199,6 +216,35 @@ class _ThemeSetting extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _HideSolvedSetting extends StatelessWidget {
+  const _HideSolvedSetting();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return BlocBuilder<HideSolvedCubit, bool>(
+      builder: (context, hideSolved) {
+        return Row(
+          children: [
+            Expanded(
+              child: Text(
+                l10n.hideSolved,
+                style: TextStyle(color: colors.textPrimary),
+              ),
+            ),
+            Switch(
+              value: hideSolved,
+              onChanged: context.read<HideSolvedCubit>().setHideSolved,
+            ),
+          ],
+        );
+      },
     );
   }
 }

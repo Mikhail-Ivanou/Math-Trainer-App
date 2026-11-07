@@ -41,9 +41,7 @@ class TopicsCubit extends Cubit<TopicsState> {
       (topics) => emit(TopicsReady(topics)),
       onError: (Object error) {
         emit(
-          TopicsFailure(
-            error is Failure ? error : const UnexpectedFailure(),
-          ),
+          TopicsFailure(error is Failure ? error : const UnexpectedFailure()),
         );
       },
     );
