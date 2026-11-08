@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/core/settings/hide_solved_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
+import 'package:math_trainer_app/features/catalog/domain/entities/catalog_rule.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/tasks_repository.dart';
@@ -61,6 +62,15 @@ void main() {
 
 class _Topics implements TopicsRepository {
   _Topics(this._topics);
+
+  @override
+  Future<Topic> addTopic({
+    required CatalogRule rule,
+    required String userId,
+    required String reason,
+  }) {
+    throw UnimplementedError();
+  }
 
   final Stream<List<Topic>> _topics;
 

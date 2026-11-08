@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:math_trainer_app/core/error/failure.dart';
+import 'package:math_trainer_app/features/catalog/domain/entities/catalog_rule.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:math_trainer_app/features/topics/state/topics_cubit.dart';
@@ -42,6 +43,15 @@ class _TopicsRepository implements TopicsRepository {
   _TopicsRepository(this._topics);
 
   final Stream<List<Topic>> _topics;
+
+  @override
+  Future<Topic> addTopic({
+    required CatalogRule rule,
+    required String userId,
+    required String reason,
+  }) {
+    throw UnimplementedError();
+  }
 
   @override
   Stream<List<Topic>> watchTopics() => _topics;

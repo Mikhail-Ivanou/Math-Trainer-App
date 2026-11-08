@@ -5,8 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/core/error/failure.dart';
 import 'package:math_trainer_app/features/topics/data/generation/task_generator_impl.dart';
-import 'package:math_trainer_app/features/topics/data/llm/aiai_llm_client.dart';
-import 'package:math_trainer_app/features/topics/data/llm/llm_config.dart';
+import 'package:math_trainer_app/core/llm/aiai_llm_client.dart';
+import 'package:math_trainer_app/core/llm/llm_config.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
 import 'package:math_trainer_app/features/topics/domain/generation.dart';
 

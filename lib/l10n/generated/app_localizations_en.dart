@@ -72,7 +72,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileTab => 'Profile';
 
   @override
-  String get topicsEmpty => 'No topics yet.';
+  String get topicsEmpty =>
+      'No topics yet. Tap Add a topic and describe what is difficult.';
+
+  @override
+  String get addTopic => 'Add a topic';
+
+  @override
+  String get addTopicTitle => 'New topic';
+
+  @override
+  String get addTopicGrade => 'Grade';
+
+  @override
+  String get addTopicPrompt => 'What is difficult?';
+
+  @override
+  String get addTopicHint =>
+      'for example: I don\'t understand how to add fractions';
+
+  @override
+  String get addTopicFound => 'Found in the textbooks:';
+
+  @override
+  String addTopicNone(int grade) {
+    return 'Nothing in the grade $grade textbooks matches. Try another wording, or pick a rule below.';
+  }
+
+  @override
+  String get addTopicBrowse => 'Or pick a rule from the textbook';
+
+  @override
+  String get addTopicAlready => 'Already in the list';
+
+  @override
+  String get addTopicSimilarChip => 'A similar topic exists';
+
+  @override
+  String get addTopicSimilarTitle => 'A similar topic already exists';
+
+  @override
+  String addTopicSimilarBody(
+    String title,
+    String source,
+    int section,
+    String sectionTitle,
+  ) {
+    return '\"$title\" is already added from $source.\nThe selected rule is from § $section. $sectionTitle. It may be the same.';
+  }
+
+  @override
+  String get addTopicAddThis => 'Add this one';
+
+  @override
+  String get addTopicOpenExisting => 'Open the existing one';
+
+  @override
+  String get addTopicFailed => 'Couldn\'t add the topic.';
+
+  @override
+  String get catalogFailed => 'Couldn\'t load the textbooks.';
 
   @override
   String get accountSection => 'Account';

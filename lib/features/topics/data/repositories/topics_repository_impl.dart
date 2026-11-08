@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:math_trainer_app/core/error/failure.dart';
 import 'package:math_trainer_app/core/reactive/shared_value_stream.dart';
 import 'package:math_trainer_app/features/topics/data/datasources/topics_remote_data_source.dart';
+import 'package:math_trainer_app/features/catalog/domain/entities/catalog_rule.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 
@@ -20,6 +21,15 @@ class TopicsRepositoryImpl implements TopicsRepository {
         return sorted;
       });
     }, mapError: _asFailure);
+  }
+
+  @override
+  Future<Topic> addTopic({
+    required CatalogRule rule,
+    required String userId,
+    required String reason,
+  }) {
+    return _dataSource.addTopic(rule: rule, userId: userId, reason: reason);
   }
 }
 

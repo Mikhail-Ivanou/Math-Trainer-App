@@ -35,6 +35,17 @@ import 'package:math_trainer_app/features/auth/domain/repositories/auth_reposito
     as _i856;
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart'
     as _i375;
+import 'package:math_trainer_app/features/catalog/data/datasources/catalog_remote_data_source.dart'
+    as _i878;
+import 'package:math_trainer_app/features/catalog/data/datasources/firebase_catalog_remote_data_source.dart'
+    as _i730;
+import 'package:math_trainer_app/features/catalog/data/matching/topic_matcher_impl.dart'
+    as _i278;
+import 'package:math_trainer_app/features/catalog/data/repositories/catalog_repository_impl.dart'
+    as _i343;
+import 'package:math_trainer_app/features/catalog/domain/matching.dart' as _i82;
+import 'package:math_trainer_app/features/catalog/domain/repositories/catalog_repository.dart'
+    as _i579;
 import 'package:math_trainer_app/features/topics/data/datasources/firebase_progress_remote_data_source.dart'
     as _i851;
 import 'package:math_trainer_app/features/topics/data/datasources/firebase_sections_remote_data_source.dart'
@@ -91,6 +102,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i88.HideSolvedRepository>(
       () => _i757.HideSolvedRepositoryImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i82.TopicMatcher>(() => _i278.TopicMatcherImpl());
     gh.lazySingleton<_i495.RestClient>(
       () => registerModule.restClient(gh<_i361.Dio>()),
     );
@@ -100,6 +112,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i616.ThemeCubit>(
       () => _i616.ThemeCubit(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i878.CatalogRemoteDataSource>(
+      () =>
+          _i730.FirebaseCatalogRemoteDataSource(gh<_i974.FirebaseFirestore>()),
     );
     gh.lazySingleton<_i879.TopicsRemoteDataSource>(
       () => _i319.FirebaseTopicsRemoteDataSource(gh<_i974.FirebaseFirestore>()),
@@ -132,6 +148,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i817.SectionsRepository>(
       () => _i1022.SectionsRepositoryImpl(gh<_i564.SectionsRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i579.CatalogRepository>(
+      () => _i343.CatalogRepositoryImpl(gh<_i878.CatalogRemoteDataSource>()),
     );
     gh.lazySingleton<_i959.TasksRepository>(
       () => _i935.TasksRepositoryImpl(gh<_i924.TasksRemoteDataSource>()),

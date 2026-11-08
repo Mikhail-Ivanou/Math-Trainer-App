@@ -21,7 +21,36 @@
   "signOut": "Sign out",
   "topicsTab": "Topics",
   "profileTab": "Profile",
-  "topicsEmpty": "No topics yet.",
+  "topicsEmpty": "No topics yet. Tap Add a topic and describe what is difficult.",
+  "addTopic": "Add a topic",
+  "addTopicTitle": "New topic",
+  "addTopicGrade": "Grade",
+  "addTopicPrompt": "What is difficult?",
+  "addTopicHint": "for example: I don't understand how to add fractions",
+  "addTopicFound": "Found in the textbooks:",
+  "addTopicNone": "Nothing in the grade {grade} textbooks matches. Try another wording, or pick a rule below.",
+  "@addTopicNone": {
+    "placeholders": {
+      "grade": {"type": "int"}
+    }
+  },
+  "addTopicBrowse": "Or pick a rule from the textbook",
+  "addTopicAlready": "Already in the list",
+  "addTopicSimilarChip": "A similar topic exists",
+  "addTopicSimilarTitle": "A similar topic already exists",
+  "addTopicSimilarBody": "\"{title}\" is already added from {source}.\nThe selected rule is from § {section}. {sectionTitle}. It may be the same.",
+  "@addTopicSimilarBody": {
+    "placeholders": {
+      "title": {"type": "String"},
+      "source": {"type": "String"},
+      "section": {"type": "int"},
+      "sectionTitle": {"type": "String"}
+    }
+  },
+  "addTopicAddThis": "Add this one",
+  "addTopicOpenExisting": "Open the existing one",
+  "addTopicFailed": "Couldn't add the topic.",
+  "catalogFailed": "Couldn't load the textbooks.",
   "accountSection": "Account",
   "settingsSection": "Settings",
   "languageSetting": "Language",

@@ -72,7 +72,65 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTab => 'Профиль';
 
   @override
-  String get topicsEmpty => 'Тем пока нет.';
+  String get topicsEmpty =>
+      'Тем пока нет. Нажмите «Добавить тему» и напишите, что даётся трудно.';
+
+  @override
+  String get addTopic => 'Добавить тему';
+
+  @override
+  String get addTopicTitle => 'Новая тема';
+
+  @override
+  String get addTopicGrade => 'Класс';
+
+  @override
+  String get addTopicPrompt => 'Что даётся трудно?';
+
+  @override
+  String get addTopicHint => 'например: не понимаю, как складывать дроби';
+
+  @override
+  String get addTopicFound => 'Нашлось в учебниках:';
+
+  @override
+  String addTopicNone(int grade) {
+    return 'В учебниках $grade класса такой темы не нашлось. Попробуйте сформулировать иначе или выберите из списка ниже.';
+  }
+
+  @override
+  String get addTopicBrowse => 'Или выберите правило из учебника';
+
+  @override
+  String get addTopicAlready => 'уже в списке';
+
+  @override
+  String get addTopicSimilarChip => 'похожая есть';
+
+  @override
+  String get addTopicSimilarTitle => 'Похожая тема уже есть';
+
+  @override
+  String addTopicSimilarBody(
+    String title,
+    String source,
+    int section,
+    String sectionTitle,
+  ) {
+    return '«$title» уже добавлена из $source.\nВыбранное правило — из § $section. $sectionTitle. Это может быть то же самое.';
+  }
+
+  @override
+  String get addTopicAddThis => 'Добавить эту';
+
+  @override
+  String get addTopicOpenExisting => 'Открыть существующую';
+
+  @override
+  String get addTopicFailed => 'Не удалось добавить тему.';
+
+  @override
+  String get catalogFailed => 'Не удалось загрузить учебники.';
 
   @override
   String get accountSection => 'Аккаунт';

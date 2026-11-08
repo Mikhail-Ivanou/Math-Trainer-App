@@ -35,6 +35,17 @@ class _TopicsView extends StatelessWidget {
         elevation: 0,
         title: Text(l10n.topicsTab),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final topicId = await context.push<String>(AppRoutes.addTopic);
+          if (topicId == null || !context.mounted) {
+            return;
+          }
+          context.push(AppRoutes.topicPath(topicId));
+        },
+        icon: const Icon(Icons.add),
+        label: Text(l10n.addTopic),
+      ),
       body: BlocBuilder<TopicsCubit, TopicsState>(
         builder: (context, state) => _TopicsBody(state: state),
       ),
@@ -85,7 +96,7 @@ class _TopicGroups extends StatelessWidget {
     final groups = groupTopicsByGrade(topics);
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 8, 24),
+      padding: const EdgeInsets.fromLTRB(20, 8, 8, 96),
       children: [
         for (final (index, group) in groups.indexed) ...[
           _GradeHeader(grade: group.grade, isFirst: index == 0),

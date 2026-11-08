@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:math_trainer_app/core/error/failure.dart';
-import 'package:math_trainer_app/features/topics/data/llm/llm_config.dart';
+import 'package:math_trainer_app/core/llm/llm_config.dart';
 
 final class LlmReply {
   const LlmReply({required this.content, required this.model});
@@ -21,6 +21,7 @@ final class AiaiLlmClient {
   Future<LlmReply> complete({
     required String system,
     required String user,
+    int maxTokens = 8000,
   }) async {
     if (!_config.isConfigured) {
       throw const GenerationFailure(GenerationProblem.unavailable);
@@ -38,7 +39,7 @@ final class AiaiLlmClient {
         ),
         data: {
           'model': _config.model,
-          'max_tokens': 8000,
+          'max_tokens': maxTokens,
           'messages': [
             {'role': 'system', 'content': system},
             {'role': 'user', 'content': user},

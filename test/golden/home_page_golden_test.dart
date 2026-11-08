@@ -11,6 +11,7 @@ import 'package:math_trainer_app/features/auth/domain/entities/auth_user.dart';
 import 'package:math_trainer_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/home/presentation/home_page.dart';
+import 'package:math_trainer_app/features/catalog/domain/entities/catalog_rule.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:math_trainer_app/l10n/generated/app_localizations.dart';
@@ -155,6 +156,15 @@ class _HiddenSolvedOff implements HideSolvedRepository {
 }
 
 class _FixedTopicsRepository implements TopicsRepository {
+  @override
+  Future<Topic> addTopic({
+    required CatalogRule rule,
+    required String userId,
+    required String reason,
+  }) {
+    throw UnimplementedError();
+  }
+
   @override
   Stream<List<Topic>> watchTopics() {
     return Stream<List<Topic>>.multi((controller) {

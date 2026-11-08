@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:math_trainer_app/features/topics/data/llm/llm_config.dart';
+import 'package:math_trainer_app/core/llm/llm_config.dart';
 
 void main() {
   test('uses a supplied key and fills missing model settings', () {

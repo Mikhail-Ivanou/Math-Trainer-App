@@ -6,12 +6,14 @@ import 'package:math_trainer_app/features/auth/presentation/auth_gate_page.dart'
 import 'package:math_trainer_app/features/auth/presentation/sign_in_page.dart';
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/home/presentation/home_page.dart';
+import 'package:math_trainer_app/features/catalog/presentation/add_topic_page.dart';
 import 'package:math_trainer_app/features/topics/presentation/topic_page.dart';
 
 abstract final class AppRoutes {
   static const auth = '/';
   static const signIn = '/sign-in';
   static const home = '/home';
+  static const addTopic = '/topics/new';
   static const topic = '/topics/:topicId';
 
   static String topicPath(String topicId) => '/topics/$topicId';
@@ -29,6 +31,10 @@ class AppRouter {
         GoRoute(path: AppRoutes.auth, builder: (_, _) => const AuthGatePage()),
         GoRoute(path: AppRoutes.signIn, builder: (_, _) => const SignInPage()),
         GoRoute(path: AppRoutes.home, builder: (_, _) => const HomePage()),
+        GoRoute(
+          path: AppRoutes.addTopic,
+          builder: (_, _) => const AddTopicPage(),
+        ),
         GoRoute(
           path: AppRoutes.topic,
           builder: (_, state) {

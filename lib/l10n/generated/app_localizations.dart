@@ -227,8 +227,109 @@ abstract class AppLocalizations {
   /// No description provided for @topicsEmpty.
   ///
   /// In en, this message translates to:
-  /// **'No topics yet.'**
+  /// **'No topics yet. Tap Add a topic and describe what is difficult.'**
   String get topicsEmpty;
+
+  /// No description provided for @addTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a topic'**
+  String get addTopic;
+
+  /// No description provided for @addTopicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New topic'**
+  String get addTopicTitle;
+
+  /// No description provided for @addTopicGrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade'**
+  String get addTopicGrade;
+
+  /// No description provided for @addTopicPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What is difficult?'**
+  String get addTopicPrompt;
+
+  /// No description provided for @addTopicHint.
+  ///
+  /// In en, this message translates to:
+  /// **'for example: I don\'t understand how to add fractions'**
+  String get addTopicHint;
+
+  /// No description provided for @addTopicFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Found in the textbooks:'**
+  String get addTopicFound;
+
+  /// No description provided for @addTopicNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the grade {grade} textbooks matches. Try another wording, or pick a rule below.'**
+  String addTopicNone(int grade);
+
+  /// No description provided for @addTopicBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'Or pick a rule from the textbook'**
+  String get addTopicBrowse;
+
+  /// No description provided for @addTopicAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'Already in the list'**
+  String get addTopicAlready;
+
+  /// No description provided for @addTopicSimilarChip.
+  ///
+  /// In en, this message translates to:
+  /// **'A similar topic exists'**
+  String get addTopicSimilarChip;
+
+  /// No description provided for @addTopicSimilarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A similar topic already exists'**
+  String get addTopicSimilarTitle;
+
+  /// No description provided for @addTopicSimilarBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{title}\" is already added from {source}.\nThe selected rule is from § {section}. {sectionTitle}. It may be the same.'**
+  String addTopicSimilarBody(
+    String title,
+    String source,
+    int section,
+    String sectionTitle,
+  );
+
+  /// No description provided for @addTopicAddThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this one'**
+  String get addTopicAddThis;
+
+  /// No description provided for @addTopicOpenExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the existing one'**
+  String get addTopicOpenExisting;
+
+  /// No description provided for @addTopicFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t add the topic.'**
+  String get addTopicFailed;
+
+  /// No description provided for @catalogFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the textbooks.'**
+  String get catalogFailed;
 
   /// No description provided for @accountSection.
   ///

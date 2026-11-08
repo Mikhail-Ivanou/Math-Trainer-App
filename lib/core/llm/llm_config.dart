@@ -1,4 +1,4 @@
-/// Settings for the task-generation model, baked in at compile time.
+/// Settings for the textbook model, baked in at compile time.
 ///
 /// `flutter run --dart-define-from-file=.env` reads `.env` while compiling.
 /// A `--dart-define` with the same name overrides that file. `.env` stays
