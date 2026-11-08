@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:math_trainer_app/features/topics/data/mappers/task_mapper.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
@@ -27,6 +28,20 @@ void main() {
         unit: 'cm',
       ),
     );
+  });
+
+  test('reads the date the task was added', () {
+    final added = DateTime.utc(2026, 3, 4);
+
+    final task = TaskMapper.fromMap('task-1', {
+      'type': 'expression',
+      'difficulty': 'easy',
+      'question': 'Compute 1 + 1',
+      'answer': '2',
+      'createdAt': Timestamp.fromDate(added),
+    });
+
+    expect(task.createdAt, added);
   });
 
   test('skips a task without a question', () {

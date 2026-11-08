@@ -178,4 +178,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get printTasks => 'PDF';
+
+  @override
+  String get generateTasks => 'New problems';
+
+  @override
+  String get generatingTasks => 'Generating…';
+
+  @override
+  String get generateLevelTitle => 'Problem level';
+
+  @override
+  String get generateAction => 'Create problems';
+
+  @override
+  String get levelMedium => 'Medium';
+
+  @override
+  String get levelHard => 'Hard';
+
+  @override
+  String get levelExpert => 'Expert';
+
+  @override
+  String get levelMediumHint =>
+      'Like the textbook: the rule in 2–3 steps, larger numbers';
+
+  @override
+  String get levelHardHint =>
+      '3–5 steps, mixed with earlier rules, with a trap';
+
+  @override
+  String get levelExpertHint =>
+      'A hard problem for this grade: it needs an idea, not a long calculation';
+
+  @override
+  String tasksAdded(int count) {
+    return 'Added $count problems.';
+  }
+
+  @override
+  String tasksAddedSkipped(int count, int rejected) {
+    return 'Added $count problems. Rejected $rejected.';
+  }
+
+  @override
+  String get generateNone => 'The model returned no valid problems. Try again.';
+
+  @override
+  String get generateUnavailable => 'Generation is not configured.';
+
+  @override
+  String get generateRejected => 'The generation key was rejected.';
+
+  @override
+  String get generateQuota => 'The generation key has no remaining quota.';
+
+  @override
+  String get generateEmpty => 'The model returned an empty answer.';
+
+  @override
+  String get tasksEmptyGenerate =>
+      'No problems yet. Tap New problems to write some for this topic.';
+
+  @override
+  String get allSolved => 'Every problem is solved.';
+
+  @override
+  String get allSolvedGenerate =>
+      'Every problem is solved. Tap New problems to get more.';
 }

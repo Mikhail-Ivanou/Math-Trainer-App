@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
 
 abstract final class TaskMapper {
@@ -21,6 +22,7 @@ abstract final class TaskMapper {
       variable: _optional(data, 'variable'),
       solutionExpr: _optional(data, 'solution_expr'),
       unit: _optional(data, 'unit'),
+      createdAt: _createdAt(data['createdAt']),
     );
   }
 
@@ -38,6 +40,14 @@ abstract final class TaskMapper {
       return null;
     }
     return text;
+  }
+
+  static DateTime? _createdAt(Object? value) {
+    return switch (value) {
+      final Timestamp timestamp => timestamp.toDate().toUtc(),
+      final DateTime dateTime => dateTime.toUtc(),
+      _ => null,
+    };
   }
 }
 

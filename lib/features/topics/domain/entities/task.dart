@@ -17,6 +17,7 @@ final class Task extends Equatable {
     this.variable,
     this.solutionExpr,
     this.unit,
+    this.createdAt,
   });
 
   final String id;
@@ -38,6 +39,9 @@ final class Task extends Equatable {
   final String? solutionExpr;
   final String? unit;
 
+  /// When the task was added. Missing on tasks stored before this field.
+  final DateTime? createdAt;
+
   @override
   List<Object?> get props => [
     id,
@@ -50,5 +54,38 @@ final class Task extends Equatable {
     variable,
     solutionExpr,
     unit,
+    createdAt,
   ];
+}
+
+/// Orders tasks by [Task.createdAt], oldest first.
+///
+/// A task without a date stays where it is. When no task has a date, the list
+/// is returned unchanged.
+List<Task> orderTasksByAddedAt(List<Task> tasks) {
+  final datedIndexes = <int>[];
+  final dated = <Task>[];
+  for (var index = 0; index < tasks.length; index++) {
+    final task = tasks[index];
+    if (task.createdAt != null) {
+      datedIndexes.add(index);
+      dated.add(task);
+    }
+  }
+  if (dated.isEmpty) {
+    return tasks;
+  }
+  dated.sort((a, b) {
+    final aAdded = a.createdAt;
+    final bAdded = b.createdAt;
+    if (aAdded == null || bAdded == null) {
+      return 0;
+    }
+    return aAdded.compareTo(bAdded);
+  });
+  final ordered = [...tasks];
+  for (var index = 0; index < datedIndexes.length; index++) {
+    ordered[datedIndexes[index]] = dated[index];
+  }
+  return ordered;
 }

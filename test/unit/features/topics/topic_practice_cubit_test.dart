@@ -75,6 +75,14 @@ class _Tasks implements TasksRepository {
 
   @override
   Stream<List<Task>> watchTasks(String topicId) => _tasks;
+
+  @override
+  Future<void> addGeneratedTasks({
+    required String topicId,
+    required List<Task> tasks,
+    required String userId,
+    required String model,
+  }) async {}
 }
 
 class _Progress implements ProgressRepository {

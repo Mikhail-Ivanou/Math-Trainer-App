@@ -10,6 +10,7 @@ import 'package:math_trainer_app/features/auth/domain/repositories/auth_reposito
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/tasks_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/sections_repository.dart';
+import 'package:math_trainer_app/features/topics/domain/generation.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,7 @@ void main() {
       expect(getIt.isRegistered<TasksRepository>(), isTrue);
       expect(getIt.isRegistered<ProgressRepository>(), isTrue);
       expect(getIt.isRegistered<HideSolvedRepository>(), isTrue);
+      expect(getIt<TaskGenerator>(), isA<TaskGenerator>());
       expect(getIt<ThemeCubit>().state, const ThemeSystem());
       expect(getIt<LocaleCubit>().state, const LocaleFollowSystem());
       expect(getIt<RestClient>(), isA<RestClient>());

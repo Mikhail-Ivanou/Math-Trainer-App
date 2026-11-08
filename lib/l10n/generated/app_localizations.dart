@@ -427,6 +427,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PDF'**
   String get printTasks;
+
+  /// No description provided for @generateTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'New problems'**
+  String get generateTasks;
+
+  /// No description provided for @generatingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating…'**
+  String get generatingTasks;
+
+  /// No description provided for @generateLevelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem level'**
+  String get generateLevelTitle;
+
+  /// No description provided for @generateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create problems'**
+  String get generateAction;
+
+  /// No description provided for @levelMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get levelMedium;
+
+  /// No description provided for @levelHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get levelHard;
+
+  /// No description provided for @levelExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert'**
+  String get levelExpert;
+
+  /// No description provided for @levelMediumHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Like the textbook: the rule in 2–3 steps, larger numbers'**
+  String get levelMediumHint;
+
+  /// No description provided for @levelHardHint.
+  ///
+  /// In en, this message translates to:
+  /// **'3–5 steps, mixed with earlier rules, with a trap'**
+  String get levelHardHint;
+
+  /// No description provided for @levelExpertHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A hard problem for this grade: it needs an idea, not a long calculation'**
+  String get levelExpertHint;
+
+  /// No description provided for @tasksAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {count} problems.'**
+  String tasksAdded(int count);
+
+  /// No description provided for @tasksAddedSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {count} problems. Rejected {rejected}.'**
+  String tasksAddedSkipped(int count, int rejected);
+
+  /// No description provided for @generateNone.
+  ///
+  /// In en, this message translates to:
+  /// **'The model returned no valid problems. Try again.'**
+  String get generateNone;
+
+  /// No description provided for @generateUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Generation is not configured.'**
+  String get generateUnavailable;
+
+  /// No description provided for @generateRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'The generation key was rejected.'**
+  String get generateRejected;
+
+  /// No description provided for @generateQuota.
+  ///
+  /// In en, this message translates to:
+  /// **'The generation key has no remaining quota.'**
+  String get generateQuota;
+
+  /// No description provided for @generateEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The model returned an empty answer.'**
+  String get generateEmpty;
+
+  /// No description provided for @tasksEmptyGenerate.
+  ///
+  /// In en, this message translates to:
+  /// **'No problems yet. Tap New problems to write some for this topic.'**
+  String get tasksEmptyGenerate;
+
+  /// No description provided for @allSolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Every problem is solved.'**
+  String get allSolved;
+
+  /// No description provided for @allSolvedGenerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Every problem is solved. Tap New problems to get more.'**
+  String get allSolvedGenerate;
 }
 
 class _AppLocalizationsDelegate

@@ -15,7 +15,6 @@ final class Topic extends Equatable {
     required this.sectionId,
     required this.sectionNumber,
     required this.sectionTitle,
-    this.paragraph = '',
     this.createdAt,
   });
 
@@ -35,9 +34,6 @@ final class Topic extends Equatable {
   final String sectionId;
   final int sectionNumber;
   final String sectionTitle;
-
-  /// The rest of the textbook paragraph, beyond [rule].
-  final String paragraph;
   final DateTime? createdAt;
 
   String get source => '§ $sectionNumber. $sectionTitle';
@@ -56,7 +52,6 @@ final class Topic extends Equatable {
     sectionId,
     sectionNumber,
     sectionTitle,
-    paragraph,
     createdAt,
   ];
 }

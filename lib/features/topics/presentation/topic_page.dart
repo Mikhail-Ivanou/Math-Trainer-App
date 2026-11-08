@@ -6,12 +6,15 @@ import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/tasks_repository.dart';
+import 'package:math_trainer_app/features/topics/domain/generation.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/sections_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/topics_repository.dart';
 import 'package:math_trainer_app/features/topics/presentation/task_labels.dart';
 import 'package:math_trainer_app/features/topics/presentation/task_pdf.dart';
+import 'package:math_trainer_app/features/topics/presentation/widgets/generate_tasks_button.dart';
 import 'package:math_trainer_app/features/topics/presentation/widgets/task_card.dart';
 import 'package:math_trainer_app/features/topics/presentation/widgets/topic_info_sheet.dart';
+import 'package:math_trainer_app/features/topics/state/task_generation_cubit.dart';
 import 'package:math_trainer_app/features/topics/state/topic_practice_cubit.dart';
 import 'package:printing/printing.dart';
 
@@ -30,39 +33,69 @@ class TopicPage extends StatelessWidget {
       AuthSessionSignedIn(:final user) => user.id,
       _ => '',
     };
-    return BlocProvider(
-      create: (_) => TopicPracticeCubit(
-        topicId: topicId,
-        userId: userId,
-        topicsRepository: getIt<TopicsRepository>(),
-        tasksRepository: getIt<TasksRepository>(),
-        progressRepository: getIt<ProgressRepository>(),
-        hideSolvedRepository: getIt<HideSolvedRepository>(),
+    final generator = getIt<TaskGenerator>();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => TopicPracticeCubit(
+            topicId: topicId,
+            userId: userId,
+            topicsRepository: getIt<TopicsRepository>(),
+            tasksRepository: getIt<TasksRepository>(),
+            progressRepository: getIt<ProgressRepository>(),
+            hideSolvedRepository: getIt<HideSolvedRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => TaskGenerationCubit(
+            userId: userId,
+            generator: generator,
+            tasksRepository: getIt<TasksRepository>(),
+            sectionsRepository: getIt<SectionsRepository>(),
+          ),
+        ),
+      ],
+      child: GenerationMessages(
+        child: _TopicView(
+          sectionsRepository: getIt<SectionsRepository>(),
+          canGenerate: generator.isConfigured,
+        ),
       ),
-      child: _TopicView(sectionsRepository: getIt<SectionsRepository>()),
     );
   }
 }
 
 class _TopicView extends StatelessWidget {
-  const _TopicView({required this.sectionsRepository});
+  const _TopicView({
+    required this.sectionsRepository,
+    required this.canGenerate,
+  });
 
   final SectionsRepository sectionsRepository;
+  final bool canGenerate;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TopicPracticeCubit, TopicPracticeState>(
-      builder: (context, state) =>
-          _TopicScaffold(state: state, sectionsRepository: sectionsRepository),
+      builder: (context, state) => _TopicScaffold(
+        state: state,
+        sectionsRepository: sectionsRepository,
+        canGenerate: canGenerate,
+      ),
     );
   }
 }
 
 class _TopicScaffold extends StatelessWidget {
-  const _TopicScaffold({required this.state, required this.sectionsRepository});
+  const _TopicScaffold({
+    required this.state,
+    required this.sectionsRepository,
+    required this.canGenerate,
+  });
 
   final TopicPracticeState state;
   final SectionsRepository sectionsRepository;
+  final bool canGenerate;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +105,11 @@ class _TopicScaffold extends StatelessWidget {
       _ => '',
     };
 
+    final topic = switch (state) {
+      TopicPracticeReady(:final topic) => topic,
+      _ => null,
+    };
+
     return Scaffold(
       backgroundColor: colors.background,
       appBar: _TopicAppBar(
@@ -79,7 +117,10 @@ class _TopicScaffold extends StatelessWidget {
         state: state,
         sectionsRepository: sectionsRepository,
       ),
-      body: _TopicBody(state: state),
+      floatingActionButton: topic == null || !canGenerate
+          ? null
+          : GenerateTasksButton(topic: topic),
+      body: _TopicBody(state: state, canGenerate: canGenerate),
     );
   }
 }
@@ -147,9 +188,10 @@ class _TopicAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _TopicBody extends StatelessWidget {
-  const _TopicBody({required this.state});
+  const _TopicBody({required this.state, required this.canGenerate});
 
   final TopicPracticeState state;
+  final bool canGenerate;
 
   @override
   Widget build(BuildContext context) {
@@ -171,26 +213,39 @@ class _TopicBody extends StatelessWidget {
         ),
       ),
       TopicPracticeReady(topic: null) => const _MissingTopic(),
-      final TopicPracticeReady ready => _PracticeBody(state: ready),
+      final TopicPracticeReady ready => Column(
+        children: [
+          _ProgressHeader(state: ready),
+          Expanded(
+            child: _PracticeList(state: ready, canGenerate: canGenerate),
+          ),
+        ],
+      ),
     };
   }
 }
 
-class _PracticeBody extends StatelessWidget {
-  const _PracticeBody({required this.state});
+class _PracticeList extends StatelessWidget {
+  const _PracticeList({required this.state, required this.canGenerate});
 
   final TopicPracticeReady state;
+  final bool canGenerate;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final tasks = state.visibleTasks;
+    final nothingLeft = state.totalCount > 0;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: EdgeInsets.fromLTRB(16, 0, 16, canGenerate ? 96 : 24),
       children: [
-        _ProgressHeader(state: state),
         if (tasks.isEmpty)
-          const _EmptyTasks()
+          _EmptyTasks(
+            message: nothingLeft
+                ? (canGenerate ? l10n.allSolvedGenerate : l10n.allSolved)
+                : (canGenerate ? l10n.tasksEmptyGenerate : l10n.tasksEmpty),
+          )
         else
           for (final task in tasks) ...[
             TaskCard(task: task, solved: state.solvedIds.contains(task.id)),
@@ -211,25 +266,28 @@ class _ProgressHeader extends StatelessWidget {
     final colors = context.colors;
     final l10n = context.l10n;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              l10n.solvedProgress(state.solvedCount, state.totalCount),
-              style: TextStyle(color: colors.textPrimary, fontSize: 16),
+    return ColoredBox(
+      color: colors.background,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                l10n.solvedProgress(state.solvedCount, state.totalCount),
+                style: TextStyle(color: colors.textPrimary, fontSize: 16),
+              ),
             ),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              context.read<TopicPracticeCubit>().setHideSolved(
-                !state.hideSolved,
-              );
-            },
-            child: Text(state.hideSolved ? l10n.showSolved : l10n.hideSolved),
-          ),
-        ],
+            OutlinedButton(
+              onPressed: () {
+                context.read<TopicPracticeCubit>().setHideSolved(
+                  !state.hideSolved,
+                );
+              },
+              child: Text(state.hideSolved ? l10n.showSolved : l10n.hideSolved),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -292,7 +350,9 @@ class _MissingTopic extends StatelessWidget {
 }
 
 class _EmptyTasks extends StatelessWidget {
-  const _EmptyTasks();
+  const _EmptyTasks({required this.message});
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -300,7 +360,7 @@ class _EmptyTasks extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32),
       child: Text(
-        context.l10n.tasksEmpty,
+        message,
         style: TextStyle(color: colors.textSecondary),
         textAlign: TextAlign.center,
       ),

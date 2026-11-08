@@ -72,5 +72,36 @@
   "topicMissing": "This topic is unavailable.",
   "printFailed": "Couldn't create the PDF.",
   "showTopic": "Topic",
-  "printTasks": "PDF"
+  "printTasks": "PDF",
+  "generateTasks": "New problems",
+  "generatingTasks": "Generating…",
+  "generateLevelTitle": "Problem level",
+  "generateAction": "Create problems",
+  "levelMedium": "Medium",
+  "levelHard": "Hard",
+  "levelExpert": "Expert",
+  "levelMediumHint": "Like the textbook: the rule in 2–3 steps, larger numbers",
+  "levelHardHint": "3–5 steps, mixed with earlier rules, with a trap",
+  "levelExpertHint": "A hard problem for this grade: it needs an idea, not a long calculation",
+  "tasksAdded": "Added {count} problems.",
+  "@tasksAdded": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "tasksAddedSkipped": "Added {count} problems. Rejected {rejected}.",
+  "@tasksAddedSkipped": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "rejected": {"type": "int"}
+    }
+  },
+  "generateNone": "The model returned no valid problems. Try again.",
+  "generateUnavailable": "Generation is not configured.",
+  "generateRejected": "The generation key was rejected.",
+  "generateQuota": "The generation key has no remaining quota.",
+  "generateEmpty": "The model returned an empty answer.",
+  "tasksEmptyGenerate": "No problems yet. Tap New problems to write some for this topic.",
+  "allSolved": "Every problem is solved.",
+  "allSolvedGenerate": "Every problem is solved. Tap New problems to get more."
 }

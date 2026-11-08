@@ -44,6 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Local model keys. The compiler reads this file via --dart-define-from-file.
+.env
+
 # Firebase client keys. Keep the local copies; do not commit them.
 /lib/core/firebase/firebase_keys.dart
 /android/app/google-services.json

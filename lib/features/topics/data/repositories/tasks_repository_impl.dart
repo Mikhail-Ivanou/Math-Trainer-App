@@ -20,6 +20,21 @@ class TasksRepositoryImpl implements TasksRepository {
       mapError: _asFailure,
     );
   }
+
+  @override
+  Future<void> addGeneratedTasks({
+    required String topicId,
+    required List<Task> tasks,
+    required String userId,
+    required String model,
+  }) {
+    return _dataSource.addGeneratedTasks(
+      topicId: topicId,
+      tasks: tasks,
+      userId: userId,
+      model: model,
+    );
+  }
 }
 
 Object _asFailure(Object error) {

@@ -11,5 +11,6 @@ String authFailureMessage(AppLocalizations l10n, Failure failure) {
     TooManyRequestsFailure() => l10n.tooManyRequests,
     NetworkFailure() => l10n.networkError,
     UnexpectedFailure() => l10n.unexpectedError,
+    GenerationFailure() => l10n.unexpectedError,
   };
 }

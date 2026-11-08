@@ -51,6 +51,8 @@ import 'package:math_trainer_app/features/topics/data/datasources/tasks_remote_d
     as _i924;
 import 'package:math_trainer_app/features/topics/data/datasources/topics_remote_data_source.dart'
     as _i879;
+import 'package:math_trainer_app/features/topics/data/generation/task_generator_impl.dart'
+    as _i1030;
 import 'package:math_trainer_app/features/topics/data/repositories/progress_repository_impl.dart'
     as _i132;
 import 'package:math_trainer_app/features/topics/data/repositories/sections_repository_impl.dart'
@@ -59,6 +61,8 @@ import 'package:math_trainer_app/features/topics/data/repositories/tasks_reposit
     as _i935;
 import 'package:math_trainer_app/features/topics/data/repositories/topics_repository_impl.dart'
     as _i662;
+import 'package:math_trainer_app/features/topics/domain/generation.dart'
+    as _i184;
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart'
     as _i36;
 import 'package:math_trainer_app/features/topics/domain/repositories/sections_repository.dart'
@@ -90,6 +94,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i495.RestClient>(
       () => registerModule.restClient(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i184.TaskGenerator>(() => _i1030.TaskGeneratorImpl());
     gh.lazySingleton<_i905.LocaleCubit>(
       () => _i905.LocaleCubit(gh<_i460.SharedPreferences>()),
     );

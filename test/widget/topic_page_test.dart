@@ -8,6 +8,7 @@ import 'package:math_trainer_app/features/auth/domain/repositories/auth_reposito
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
+import 'package:math_trainer_app/features/topics/domain/generation.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/tasks_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/sections_repository.dart';
@@ -29,7 +30,8 @@ void main() {
       ..registerSingleton<TasksRepository>(_TasksRepository())
       ..registerSingleton<ProgressRepository>(progress)
       ..registerSingleton<HideSolvedRepository>(hideSolved)
-      ..registerSingleton<SectionsRepository>(_SectionsRepository());
+      ..registerSingleton<SectionsRepository>(_SectionsRepository())
+      ..registerSingleton<TaskGenerator>(const _UnconfiguredGenerator());
     addTearDown(getIt.reset);
     addTearDown(hideSolved.close);
 
@@ -51,6 +53,11 @@ void main() {
 
     expect(find.text('Distributive law'), findsOneWidget);
     expect(find.text('Solved 1 of 2'), findsOneWidget);
+    expect(find.text('Hide solved'), findsOneWidget);
+    expect(
+      tester.getBottomLeft(find.text('Solved 1 of 2')).dy,
+      lessThanOrEqualTo(tester.getTopLeft(find.byType(ListView)).dy),
+    );
     expect(find.text('Compute (20 + 3) · 4'), findsOneWidget);
     expect(find.text('How many pencils?'), findsOneWidget);
 
@@ -110,7 +117,8 @@ void main() {
       ..registerSingleton<TasksRepository>(_TasksRepository())
       ..registerSingleton<ProgressRepository>(_ProgressRepository())
       ..registerSingleton<HideSolvedRepository>(hideSolved)
-      ..registerSingleton<SectionsRepository>(_SectionsRepository());
+      ..registerSingleton<SectionsRepository>(_SectionsRepository())
+      ..registerSingleton<TaskGenerator>(const _UnconfiguredGenerator());
     addTearDown(getIt.reset);
     addTearDown(hideSolved.close);
 
@@ -144,7 +152,8 @@ void main() {
       ..registerSingleton<HideSolvedRepository>(hideSolved)
       ..registerSingleton<SectionsRepository>(
         _SectionsRepository(rule: 'Theory. ' * 400),
-      );
+      )
+      ..registerSingleton<TaskGenerator>(const _UnconfiguredGenerator());
     addTearDown(getIt.reset);
     addTearDown(hideSolved.close);
 
@@ -176,6 +185,51 @@ void main() {
       tester.getSize(find.byType(BottomSheet)).height,
       lessThanOrEqualTo(screenHeight * 0.9),
     );
+  });
+
+  testWidgets('asks for a level and saves the generated tasks', (tester) async {
+    final hideSolved = _HideSolvedRepository();
+    final tasks = _SavingTasks();
+    final generator = _RecordingGenerator();
+    getIt
+      ..registerSingleton<TopicsRepository>(_TopicsRepository())
+      ..registerSingleton<TasksRepository>(tasks)
+      ..registerSingleton<ProgressRepository>(_ProgressRepository())
+      ..registerSingleton<HideSolvedRepository>(hideSolved)
+      ..registerSingleton<SectionsRepository>(_SectionsRepository())
+      ..registerSingleton<TaskGenerator>(generator);
+    addTearDown(getIt.reset);
+    addTearDown(hideSolved.close);
+
+    final session = AuthSessionCubit(_SignedInAuth());
+    addTearDown(session.close);
+
+    await tester.pumpWidget(
+      BlocProvider.value(
+        value: session,
+        child: const MaterialApp(
+          locale: Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: TopicPage(topicId: 'rule-1'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Problem level'), findsOneWidget);
+
+    await tester.tap(find.text('Create problems'));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Added 1 problems.'), findsOneWidget);
+    expect(generator.level, Difficulty.medium);
+    expect(tasks.saved, hasLength(1));
+    expect(tasks.userId, 'user-1');
+    expect(tasks.model, 'test-model');
   });
 }
 
@@ -212,7 +266,6 @@ class _TopicsRepository implements TopicsRepository {
         id: 'rule-1',
         title: 'Distributive law',
         rule: 'Multiply each term.',
-        paragraph: 'The full paragraph.',
         grade: 5,
         subject: 'math',
         bookId: 'book-1',
@@ -228,6 +281,14 @@ class _TopicsRepository implements TopicsRepository {
 }
 
 class _TasksRepository implements TasksRepository {
+  @override
+  Future<void> addGeneratedTasks({
+    required String topicId,
+    required List<Task> tasks,
+    required String userId,
+    required String model,
+  }) async {}
+
   @override
   Stream<List<Task>> watchTasks(String topicId) {
     return Stream.value(const [
@@ -283,6 +344,65 @@ class _HideSolvedRepository implements HideSolvedRepository {
   }
 
   Future<void> close() => _values.close();
+}
+
+class _SavingTasks implements TasksRepository {
+  List<Task> saved = const [];
+  String? userId;
+  String? model;
+
+  @override
+  Future<void> addGeneratedTasks({
+    required String topicId,
+    required List<Task> tasks,
+    required String userId,
+    required String model,
+  }) async {
+    saved = tasks;
+    this.userId = userId;
+    this.model = model;
+  }
+
+  @override
+  Stream<List<Task>> watchTasks(String topicId) => Stream.value(const []);
+}
+
+class _RecordingGenerator implements TaskGenerator {
+  Difficulty? level;
+
+  @override
+  bool get isConfigured => true;
+
+  @override
+  Future<GenerationResult> generate(GenerationRequest request) async {
+    level = request.level;
+    return GenerationResult(
+      tasks: [
+        Task(
+          id: '',
+          type: TaskType.expression,
+          difficulty: request.level,
+          question: 'Compute 2 + 2',
+          answer: '4',
+          expr: '2+2',
+        ),
+      ],
+      rejectedCount: 0,
+      model: 'test-model',
+    );
+  }
+}
+
+class _UnconfiguredGenerator implements TaskGenerator {
+  const _UnconfiguredGenerator();
+
+  @override
+  bool get isConfigured => false;
+
+  @override
+  Future<GenerationResult> generate(GenerationRequest request) {
+    throw UnimplementedError();
+  }
 }
 
 class _SectionsRepository implements SectionsRepository {

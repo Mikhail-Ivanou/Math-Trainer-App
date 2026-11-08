@@ -10,6 +10,7 @@ import 'package:math_trainer_app/features/auth/domain/repositories/auth_reposito
 import 'package:math_trainer_app/features/auth/state/auth_session_cubit.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/task.dart';
 import 'package:math_trainer_app/features/topics/domain/entities/topic.dart';
+import 'package:math_trainer_app/features/topics/domain/generation.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/progress_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/tasks_repository.dart';
 import 'package:math_trainer_app/features/topics/domain/repositories/sections_repository.dart';
@@ -24,7 +25,8 @@ void main() {
       ..registerSingleton<TasksRepository>(_TasksRepository())
       ..registerSingleton<ProgressRepository>(_ProgressRepository())
       ..registerSingleton<HideSolvedRepository>(_HiddenSolvedOff())
-      ..registerSingleton<SectionsRepository>(_SectionsRepository());
+      ..registerSingleton<SectionsRepository>(_SectionsRepository())
+      ..registerSingleton<TaskGenerator>(const _UnconfiguredGenerator());
   });
 
   tearDownAll(getIt.reset);
@@ -122,7 +124,6 @@ class _TopicsRepository implements TopicsRepository {
           id: 'rule-1',
           title: 'Distributive law',
           rule: 'Multiply each term.',
-          paragraph: 'The full paragraph.',
           grade: 5,
           subject: 'math',
           bookId: 'book-1',
@@ -139,6 +140,14 @@ class _TopicsRepository implements TopicsRepository {
 }
 
 class _TasksRepository implements TasksRepository {
+  @override
+  Future<void> addGeneratedTasks({
+    required String topicId,
+    required List<Task> tasks,
+    required String userId,
+    required String model,
+  }) async {}
+
   @override
   Stream<List<Task>> watchTasks(String topicId) {
     return Stream<List<Task>>.multi((controller) {
@@ -177,6 +186,18 @@ class _ProgressRepository implements ProgressRepository {
     required String taskId,
     required bool solved,
   }) async {}
+}
+
+class _UnconfiguredGenerator implements TaskGenerator {
+  const _UnconfiguredGenerator();
+
+  @override
+  bool get isConfigured => false;
+
+  @override
+  Future<GenerationResult> generate(GenerationRequest request) {
+    throw UnimplementedError();
+  }
 }
 
 class _SectionsRepository implements SectionsRepository {

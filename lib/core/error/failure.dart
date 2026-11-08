@@ -59,3 +59,14 @@ final class NetworkFailure extends Failure {
   @override
   List<Object?> get props => const [];
 }
+
+enum GenerationProblem { unavailable, rejected, quota, empty, noneValid }
+
+final class GenerationFailure extends Failure {
+  const GenerationFailure(this.problem);
+
+  final GenerationProblem problem;
+
+  @override
+  List<Object?> get props => [problem];
+}

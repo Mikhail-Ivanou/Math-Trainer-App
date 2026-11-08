@@ -178,4 +178,74 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get printTasks => 'PDF';
+
+  @override
+  String get generateTasks => 'Новые задания';
+
+  @override
+  String get generatingTasks => 'Генерирую…';
+
+  @override
+  String get generateLevelTitle => 'Уровень заданий';
+
+  @override
+  String get generateAction => 'Составить задания';
+
+  @override
+  String get levelMedium => 'Средний';
+
+  @override
+  String get levelHard => 'Сложный';
+
+  @override
+  String get levelExpert => 'Максимальный';
+
+  @override
+  String get levelMediumHint =>
+      'Как задания из учебника: правило в 2–3 шага, числа побольше';
+
+  @override
+  String get levelHardHint =>
+      'В 3–5 шагов, вместе с другими правилами, с подвохом';
+
+  @override
+  String get levelExpertHint =>
+      'Повышенная трудность, почти олимпиада: нужна догадка';
+
+  @override
+  String tasksAdded(int count) {
+    return 'Добавлено заданий: $count.';
+  }
+
+  @override
+  String tasksAddedSkipped(int count, int rejected) {
+    return 'Добавлено заданий: $count. Отброшено с ошибками: $rejected.';
+  }
+
+  @override
+  String get generateNone =>
+      'Модель не дала ни одного верного задания, попробуйте ещё раз.';
+
+  @override
+  String get generateUnavailable => 'Генерация не настроена.';
+
+  @override
+  String get generateRejected => 'Ключ генерации не принят.';
+
+  @override
+  String get generateQuota => 'Закончился лимит ключа генерации.';
+
+  @override
+  String get generateEmpty => 'Модель вернула пустой ответ.';
+
+  @override
+  String get tasksEmptyGenerate =>
+      'Заданий пока нет. Нажмите «Новые задания», чтобы составить их по теме.';
+
+  @override
+  String get allSolved => 'Все задания решены.';
+
+  @override
+  String get allSolvedGenerate =>
+      'Все задания решены. Нажмите «Новые задания», чтобы получить ещё.';
 }

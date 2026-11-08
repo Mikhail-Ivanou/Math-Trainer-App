@@ -83,7 +83,7 @@ class TopicPracticeCubit extends Cubit<TopicPracticeState> {
           ) {
             return TopicPracticeReady(
               topic: _topicById(topics, topicId),
-              tasks: tasks,
+              tasks: orderTasksByAddedAt(tasks),
               solvedIds: solvedIds,
               hideSolved: hideSolved,
             );
