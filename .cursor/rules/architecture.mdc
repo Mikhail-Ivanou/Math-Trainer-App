@@ -14,7 +14,8 @@ Feature layout: `domain/`, `data/`, `state/`, `presentation/`. Feature widgets l
 - Keep `build` methods small. Extract a nested widget when a builder covers more than one layout region.
 - Resolve the graph in `main` via `configureDependencies`. `App` provides only app-wide cubits: theme, locale, and auth session.
 - The router only maps a location to a screen. It does not take or pass feature dependencies.
-- A screen reads each dependency it needs from `getIt` in `core/di/injection.dart`. Nested widgets do not call `getIt`.
+- The widget that creates a Cubit reads that Cubit's dependencies from `getIt` in `core/di/injection.dart`. A route screen does this, and so does a tab that owns its Cubit, such as `TopicsTab` and `ProfileTab`. Widgets nested under that owner do not call `getIt`.
+- Build a long list with `ListView.builder` or `ListView.separated`. Use `ListView` with an explicit `children` list only for a short, fixed layout.
 - User-facing strings come from ARB (`lib/l10n`). Regenerate with `flutter gen-l10n`.
 - Feature widgets read colors with `context.colors` and strings with `context.l10n`. Do not call `Theme.of(context).extension<AppColors>()` or `AppLocalizations.of(context)` in features.
 - Shared widgets and theme settings live in `core/ui_kit/`.
