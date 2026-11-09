@@ -232,26 +232,25 @@ class _PracticeList extends StatelessWidget {
     final l10n = context.l10n;
     final tasks = state.visibleTasks;
     final nothingLeft = state.totalCount > 0;
-
-    return ListView(
+    if (tasks.isEmpty) {
+      return _EmptyTasks(
+        message: nothingLeft
+            ? (canGenerate ? l10n.allSolvedGenerate : l10n.allSolved)
+            : (canGenerate ? l10n.tasksEmptyGenerate : l10n.tasksEmpty),
+      );
+    }
+    return ListView.separated(
       padding: EdgeInsets.fromLTRB(16, 0, 16, canGenerate ? 96 : 24),
-      children: [
-        if (tasks.isEmpty)
-          _EmptyTasks(
-            message: nothingLeft
-                ? (canGenerate ? l10n.allSolvedGenerate : l10n.allSolved)
-                : (canGenerate ? l10n.tasksEmptyGenerate : l10n.tasksEmpty),
-          )
-        else
-          for (final task in tasks) ...[
-            TaskCard(
-              key: ValueKey(task.id),
-              task: task,
-              solved: state.solvedIds.contains(task.id),
-            ),
-            const SizedBox(height: 12),
-          ],
-      ],
+      itemBuilder: (context, index) {
+        final task = tasks[index];
+        return TaskCard(
+          key: ValueKey(task.id),
+          task: task,
+          solved: state.solvedIds.contains(task.id),
+        );
+      },
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      itemCount: tasks.length,
     );
   }
 }
