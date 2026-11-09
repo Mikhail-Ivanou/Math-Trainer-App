@@ -67,10 +67,10 @@ class _LevelPickerSheetState extends State<LevelPickerSheet> {
               ),
             ),
             const SizedBox(height: 8),
-            FilledButton.icon(
+            AppButton(
               onPressed: () => Navigator.of(context).pop(_level),
               icon: const Icon(Icons.auto_awesome),
-              label: Text(l10n.generateAction),
+              child: Text(l10n.generateAction),
             ),
           ],
         ),

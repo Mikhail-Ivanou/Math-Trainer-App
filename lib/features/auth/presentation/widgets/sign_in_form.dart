@@ -94,26 +94,17 @@ class _SignInFormState extends State<SignInForm> {
                             ),
                           ],
                           const SizedBox(height: 24),
-                          FilledButton(
-                            onPressed: state.submitting
-                                ? null
-                                : () => cubit.submit(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  ),
-                            child: state.submitting
-                                ? const SizedBox(
-                                    width: 18,
-                                    height: 18,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Text(
-                                    isRegistering
-                                        ? l10n.registerAction
-                                        : l10n.signInAction,
-                                  ),
+                          AppButton(
+                            submitting: state.submitting,
+                            onPressed: () => cubit.submit(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                            child: Text(
+                              isRegistering
+                                  ? l10n.registerAction
+                                  : l10n.signInAction,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           OutlinedButton(

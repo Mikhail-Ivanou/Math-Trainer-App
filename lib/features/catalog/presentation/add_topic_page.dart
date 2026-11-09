@@ -43,12 +43,7 @@ class _AddTopicView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        backgroundColor: colors.background,
-        foregroundColor: colors.textPrimary,
-        elevation: 0,
-        title: Text(l10n.addTopicTitle),
-      ),
+      appBar: AppBar(title: Text(l10n.addTopicTitle)),
       body: BlocBuilder<AddTopicCubit, AddTopicState>(
         builder: (context, state) => switch (state) {
           AddTopicLoading() => const Center(child: CircularProgressIndicator()),
@@ -281,7 +276,7 @@ class _AddTopicFormState extends State<_AddTopicForm> {
             onPressed: () => Navigator.of(context).pop('add'),
             child: Text(l10n.addTopicAddThis),
           ),
-          FilledButton(
+          AppButton(
             onPressed: () => Navigator.of(context).pop('open'),
             child: Text(l10n.addTopicOpenExisting),
           ),

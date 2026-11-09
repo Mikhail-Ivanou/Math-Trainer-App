@@ -22,6 +22,12 @@ abstract final class AppTheme {
     return ThemeData(
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colors.background,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colors.background,
+        foregroundColor: colors.textPrimary,
+        surfaceTintColor: colors.background,
+        elevation: 0,
+      ),
       useMaterial3: true,
       extensions: [colors],
     );

@@ -30,12 +30,7 @@ class _ProfileView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        backgroundColor: colors.background,
-        foregroundColor: colors.textPrimary,
-        elevation: 0,
-        title: Text(l10n.profileTab),
-      ),
+      appBar: AppBar(title: Text(l10n.profileTab)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
         children: const [

@@ -29,12 +29,7 @@ class _TopicsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        backgroundColor: colors.background,
-        foregroundColor: colors.textPrimary,
-        elevation: 0,
-        title: Text(l10n.topicsTab),
-      ),
+      appBar: AppBar(title: Text(l10n.topicsTab)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final topicId = await context.push<String>(AppRoutes.addTopic);

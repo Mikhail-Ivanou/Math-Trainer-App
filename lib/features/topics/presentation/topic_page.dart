@@ -151,10 +151,6 @@ class _TopicAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       toolbarHeight: 72,
-      backgroundColor: colors.background,
-      foregroundColor: colors.textPrimary,
-      surfaceTintColor: colors.background,
-      elevation: 0,
       centerTitle: true,
       leading: const _BackButton(),
       title: Text(
@@ -301,14 +297,7 @@ class _MissingTopicScaffold extends StatelessWidget {
     final colors = context.colors;
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        toolbarHeight: 72,
-        backgroundColor: colors.background,
-        foregroundColor: colors.textPrimary,
-        surfaceTintColor: colors.background,
-        elevation: 0,
-        leading: const _BackButton(),
-      ),
+      appBar: AppBar(toolbarHeight: 72, leading: const _BackButton()),
       body: const _MissingTopic(),
     );
   }
