@@ -244,7 +244,11 @@ class _PracticeList extends StatelessWidget {
           )
         else
           for (final task in tasks) ...[
-            TaskCard(task: task, solved: state.solvedIds.contains(task.id)),
+            TaskCard(
+              key: ValueKey(task.id),
+              task: task,
+              solved: state.solvedIds.contains(task.id),
+            ),
             const SizedBox(height: 12),
           ],
       ],

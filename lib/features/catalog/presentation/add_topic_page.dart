@@ -106,7 +106,7 @@ class _AddTopicFormState extends State<_AddTopicForm> {
           child: SegmentedButton<int>(
             showSelectedIcon: false,
             selected: {state.grade},
-            onSelectionChanged: busy
+            onSelectionChanged: state.searching
                 ? null
                 : (selection) {
                     context.read<AddTopicCubit>().selectGrade(selection.first);

@@ -1,32 +1,78 @@
 import 'dart:async';
 
-import 'package:rxdart/rxdart.dart';
-
 /// One shared stream that replays the latest value to every new listener.
+///
+/// The source is opened for the first listener and cancelled when the last
+/// one leaves. A source that fails is not remembered: the next [watch] opens
+/// it again.
 final class SharedValueStream<T> {
-  final _subject = BehaviorSubject<T>();
-  StreamSubscription<T>? _subscription;
+  final _listeners = <MultiStreamController<T>>[];
+  StreamSubscription<T>? _source;
+  T? _value;
+  var _hasValue = false;
 
-  bool get hasValue => _subject.hasValue;
+  bool get hasValue => _hasValue;
 
-  T? get valueOrNull => _subject.hasValue ? _subject.value : null;
+  T? get valueOrNull => _hasValue ? _value : null;
 
-  void add(T value) => _subject.add(value);
+  void add(T value) {
+    _hasValue = true;
+    _value = value;
+    for (final listener in [..._listeners]) {
+      listener.add(value);
+    }
+  }
 
-  /// Subscribes to [open] once. Later calls replay the cached value.
+  /// Subscribes to [open] while somebody is listening.
   Stream<T> watch(
     Stream<T> Function() open, {
     required Object Function(Object error) mapError,
+    void Function()? onRelease,
   }) {
-    _subscription ??= open().listen(
-      _subject.add,
+    return Stream<T>.multi((listener) {
+      _listeners.add(listener);
+      listener.onCancel = () {
+        _listeners.remove(listener);
+        if (_listeners.isEmpty) {
+          _release();
+          onRelease?.call();
+        }
+      };
+      if (_hasValue) {
+        listener.add(_value as T);
+      }
+      _ensureOpen(open, mapError);
+    });
+  }
+
+  void _ensureOpen(
+    Stream<T> Function() open,
+    Object Function(Object error) mapError,
+  ) {
+    if (_source != null) {
+      return;
+    }
+    _source = open().listen(
+      add,
       onError: (Object error, StackTrace stackTrace) {
-        _subject.addError(mapError(error), stackTrace);
+        final mapped = mapError(error);
+        for (final listener in [..._listeners]) {
+          listener.addError(mapped, stackTrace);
+        }
+        _dropSource();
       },
     );
-    if (_subject.hasError && !_subject.hasValue) {
-      return Stream<T>.error(_subject.error, _subject.stackTrace);
-    }
-    return _subject.stream;
+  }
+
+  void _dropSource() {
+    final source = _source;
+    _source = null;
+    source?.cancel();
+  }
+
+  void _release() {
+    _dropSource();
+    _hasValue = false;
+    _value = null;
   }
 }

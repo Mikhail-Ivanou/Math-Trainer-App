@@ -60,6 +60,7 @@ final class AddTopicReady extends AddTopicState {
   AddTopicReady copyWith({
     int? grade,
     List<CatalogRule>? catalog,
+    List<Topic>? topics,
     bool? loadingCatalog,
     bool? searching,
     List<TopicMatch>? matches,
@@ -71,7 +72,7 @@ final class AddTopicReady extends AddTopicState {
       grades: grades,
       grade: grade ?? this.grade,
       catalog: catalog ?? this.catalog,
-      topics: topics,
+      topics: topics ?? this.topics,
       matches: clearMatches ? null : matches ?? this.matches,
       loadingCatalog: loadingCatalog ?? this.loadingCatalog,
       searching: searching ?? this.searching,
@@ -104,6 +105,7 @@ class AddTopicCubit extends Cubit<AddTopicState> {
   final CatalogRepository _catalogRepository;
   final TopicsRepository _topicsRepository;
   final TopicMatcher _matcher;
+  var _gradeRequest = 0;
 
   Future<void> load() async {
     emit(const AddTopicLoading());
@@ -127,20 +129,39 @@ class AddTopicCubit extends Cubit<AddTopicState> {
     if (current is! AddTopicReady || current.grade == grade) {
       return;
     }
+    final request = ++_gradeRequest;
     emit(
       current.copyWith(
         grade: grade,
+        catalog: const [],
         loadingCatalog: true,
         clearMatches: true,
         clearFailure: true,
       ),
     );
     try {
-      await _loadGrade(current.grades, grade);
+      final catalogFuture = _catalogRepository.catalog(grade);
+      final topicsFuture = _topicsRepository.watchTopics().first;
+      final catalog = await catalogFuture;
+      final topics = await topicsFuture;
+      if (!_isCurrentGrade(request)) {
+        return;
+      }
+      final latest = state;
+      if (latest is! AddTopicReady) {
+        return;
+      }
+      emit(
+        latest.copyWith(
+          catalog: catalog,
+          topics: topics,
+          loadingCatalog: false,
+        ),
+      );
     } on Failure catch (failure) {
-      emit(AddTopicFailure(failure));
+      _keepGradeFailure(request, failure);
     } catch (_) {
-      emit(const AddTopicFailure(UnexpectedFailure()));
+      _keepGradeFailure(request, const UnexpectedFailure());
     }
   }
 
@@ -210,6 +231,21 @@ class AddTopicCubit extends Cubit<AddTopicState> {
       _stopSearching();
       throw const UnexpectedFailure();
     }
+  }
+
+  bool _isCurrentGrade(int request) {
+    return !isClosed && request == _gradeRequest;
+  }
+
+  void _keepGradeFailure(int request, Failure failure) {
+    if (!_isCurrentGrade(request)) {
+      return;
+    }
+    final latest = state;
+    if (latest is! AddTopicReady) {
+      return;
+    }
+    emit(latest.copyWith(loadingCatalog: false, failure: failure));
   }
 
   Future<void> _loadGrade(List<int> grades, int grade) async {

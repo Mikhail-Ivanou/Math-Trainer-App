@@ -18,6 +18,11 @@ class TasksRepositoryImpl implements TasksRepository {
     return cache.watch(
       () => _dataSource.watchTasks(topicId),
       mapError: _asFailure,
+      onRelease: () {
+        if (identical(_byTopic[topicId], cache)) {
+          _byTopic.remove(topicId);
+        }
+      },
     );
   }
 

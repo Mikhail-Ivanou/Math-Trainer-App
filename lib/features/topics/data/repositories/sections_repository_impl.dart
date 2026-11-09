@@ -19,13 +19,16 @@ class SectionsRepositoryImpl implements SectionsRepository {
     if (bookId.isEmpty || sectionId.isEmpty) {
       return Stream.value('');
     }
-    final cache = _bySection.putIfAbsent(
-      '$bookId/$sectionId',
-      SharedValueStream.new,
-    );
+    final key = '$bookId/$sectionId';
+    final cache = _bySection.putIfAbsent(key, SharedValueStream.new);
     return cache.watch(
       () => _dataSource.watchSectionRule(bookId, sectionId),
       mapError: _asFailure,
+      onRelease: () {
+        if (identical(_bySection[key], cache)) {
+          _bySection.remove(key);
+        }
+      },
     );
   }
 }

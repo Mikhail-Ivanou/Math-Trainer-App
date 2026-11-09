@@ -61,14 +61,17 @@ class TaskGenerationCubit extends Cubit<TaskGenerationState> {
   final SectionsRepository sectionsRepository;
 
   Future<void> generate(Topic topic, Difficulty level) async {
-    if (state is TaskGenerationInProgress) {
+    if (isClosed || state is TaskGenerationInProgress) {
       return;
     }
-    emit(TaskGenerationInProgress(level));
+    _emit(TaskGenerationInProgress(level));
     try {
       final context = await sectionsRepository
           .watchSectionRule(bookId: topic.bookId, sectionId: topic.sectionId)
           .first;
+      if (isClosed) {
+        return;
+      }
       final result = await generator.generate(
         GenerationRequest(
           topicTitle: topic.title,
@@ -79,8 +82,11 @@ class TaskGenerationCubit extends Cubit<TaskGenerationState> {
           context: context,
         ),
       );
+      if (isClosed) {
+        return;
+      }
       if (result.tasks.isEmpty) {
-        emit(
+        _emit(
           TaskGenerationFailureState(
             level,
             const GenerationFailure(GenerationProblem.noneValid),
@@ -94,7 +100,7 @@ class TaskGenerationCubit extends Cubit<TaskGenerationState> {
         userId: userId,
         model: result.model,
       );
-      emit(
+      _emit(
         TaskGenerationSuccess(
           level,
           added: result.tasks.length,
@@ -102,9 +108,16 @@ class TaskGenerationCubit extends Cubit<TaskGenerationState> {
         ),
       );
     } on Failure catch (failure) {
-      emit(TaskGenerationFailureState(level, failure));
+      _emit(TaskGenerationFailureState(level, failure));
     } catch (_) {
-      emit(TaskGenerationFailureState(level, const UnexpectedFailure()));
+      _emit(TaskGenerationFailureState(level, const UnexpectedFailure()));
     }
+  }
+
+  void _emit(TaskGenerationState next) {
+    if (isClosed) {
+      return;
+    }
+    emit(next);
   }
 }

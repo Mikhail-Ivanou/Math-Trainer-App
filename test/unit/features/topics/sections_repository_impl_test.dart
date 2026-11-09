@@ -24,19 +24,16 @@ void main() {
       () => dataSource.watchSectionRule('book-1', 'section-9'),
     ).thenAnswer((_) => controller.stream);
 
-    final first = repository.watchSectionRule(
-      bookId: 'book-1',
-      sectionId: 'section-9',
-    );
-    final emitted = expectLater(first, emits('Multiply each term.'));
+    final first = repository
+        .watchSectionRule(bookId: 'book-1', sectionId: 'section-9')
+        .listen(null);
     controller.add('Multiply each term.');
-    await emitted;
-
     await expectLater(
       repository.watchSectionRule(bookId: 'book-1', sectionId: 'section-9'),
       emits('Multiply each term.'),
     );
     verify(() => dataSource.watchSectionRule('book-1', 'section-9')).called(1);
+    await first.cancel();
     await controller.close();
   });
 

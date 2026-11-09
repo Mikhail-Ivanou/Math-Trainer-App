@@ -22,6 +22,11 @@ class ProgressRepositoryImpl implements ProgressRepository {
     return cache.watch(
       () => _dataSource.watchSolvedTaskIds(userId),
       mapError: _asFailure,
+      onRelease: () {
+        if (identical(_byUser[userId], cache)) {
+          _byUser.remove(userId);
+        }
+      },
     );
   }
 
